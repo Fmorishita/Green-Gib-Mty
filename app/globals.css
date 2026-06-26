@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-cream text-charcoal antialiased;
+    font-feature-settings: "ss01", "cv01";
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    @apply bg-green-deep text-cream;
+  }
+
+  /* Foco visible y accesible en toda la interfaz */
+  :focus-visible {
+    @apply outline-none ring-2 ring-green-deep/60 ring-offset-2 ring-offset-cream;
+  }
+
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  /* Contenido de artículos de blog renderizado desde texto */
+  .prose-gibb {
+    @apply text-lg leading-relaxed text-charcoal;
+  }
+  .prose-gibb h2 {
+    @apply mt-10 font-display text-2xl font-medium text-green-deep;
+  }
+  .prose-gibb p {
+    @apply mt-5;
+  }
+  .prose-gibb ul {
+    @apply mt-5 space-y-2 pl-1;
+  }
+  .prose-gibb li {
+    @apply relative pl-6;
+  }
+  .prose-gibb li::before {
+    content: "";
+    @apply absolute left-0 top-[0.7em] h-1.5 w-1.5 rounded-full bg-green-olive;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  /* Respeta preferencias de movimiento reducido */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
