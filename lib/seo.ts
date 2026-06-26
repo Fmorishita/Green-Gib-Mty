@@ -39,7 +39,7 @@ export function pageMetadata({
   title,
   description = SITE_DESCRIPTION,
   path = "/",
-  image = "/images/og-default.svg",
+  image = "/images/og-default.jpg",
   keywords = DEFAULT_KEYWORDS,
 }: PageMetaParams): Metadata {
   const url = `${SITE_URL}${path}`;
@@ -79,7 +79,7 @@ export function localBusinessJsonLd() {
     name: SITE_NAME,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
-    image: `${SITE_URL}/images/og-default.svg`,
+    image: `${SITE_URL}/images/og-default.jpg`,
     priceRange: "$$$",
     areaServed: {
       "@type": "City",

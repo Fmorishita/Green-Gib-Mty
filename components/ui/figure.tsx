@@ -19,9 +19,9 @@ interface FigureProps {
 
 /**
  * Imagen unificada del sitio.
- * - Si `src` tiene un asset asignado en `lib/placeholder.ts`, usa esa imagen.
+ * - Si `src` tiene una fotografía asignada en `lib/placeholder.ts`, usa esa imagen con next/image.
  * - Si `src` es una URL real, usa next/image.
- * - Si `src` sigue siendo un label sin asset, genera un placeholder SVG de marca.
+ * - Si `src` sigue siendo un label sin asset, genera un placeholder SVG de marca como fallback.
  */
 export function Figure({
   src,
@@ -34,11 +34,10 @@ export function Figure({
 }: FigureProps) {
   const resolvedSrc = resolveImageSrc(src);
   const realImage = isRealImage(src);
-  const isSvg = resolvedSrc.endsWith(".svg");
 
   return (
     <div className={cn("relative overflow-hidden bg-cream-dark", className)}>
-      {realImage && !isSvg ? (
+      {realImage ? (
         <Image
           src={resolvedSrc}
           alt={alt}
@@ -50,7 +49,7 @@ export function Figure({
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={realImage ? resolvedSrc : placeholderDataUri({ label: src, variant })}
+          src={placeholderDataUri({ label: src, variant })}
           alt={alt}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
