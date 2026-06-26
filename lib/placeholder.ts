@@ -1,11 +1,10 @@
 /**
- * Generador de placeholders de marca.
+ * Generador de placeholders de marca + resolver de assets reales.
  *
- * Mientras Green Gibb sube su fotografía real, las imágenes del sitio se
- * representan con SVGs generados al vuelo con la paleta de la marca. Son
- * ligeros, no dependen de la red, no tienen problemas de derechos y se ven
- * intencionales. Para usar una foto real, basta con reemplazar el string del
- * dato por una URL `http(s)` y el componente <Figure> usará next/image.
+ * Fase 1 de imagen: varios labels de mock data se redirigen a archivos en
+ * /public/images para que el sitio ya muestre visuales editoriales en lugar
+ * de placeholders generados al vuelo. Los labels que no estén en el mapa
+ * siguen usando el SVG dinámico de marca.
  */
 
 type PaletteKey = "green" | "olive" | "sand" | "terracotta" | "stone" | "cream";
@@ -20,6 +19,120 @@ const PALETTES: Record<PaletteKey, { from: string; to: string; ink: string }> = 
 };
 
 const ORDER: PaletteKey[] = ["green", "olive", "sand", "terracotta", "stone", "cream"];
+
+const A = "/images/green-gibb";
+
+const IMAGE_ASSETS: Record<string, string> = {
+  "Jardín residencial premium Monterrey": `${A}/hero-home.svg`,
+  "Servicios de paisajismo Green Gibb": `${A}/services-hero.svg`,
+  "Portafolio de paisajismo Monterrey": `${A}/project-residential.svg`,
+  "Tienda de plantas y macetas Green Gibb": `${A}/products-clean.svg`,
+  "Equipo Green Gibb paisajismo": `${A}/team-working.svg`,
+  "Contacto Green Gibb paisajismo": `${A}/team-working.svg`,
+  "Texturas naturales Green Gibb": `${A}/materials-detail.svg`,
+  "Jardín diseñado con intención": `${A}/project-residential.svg`,
+  "Terraza con vegetación natural": `${A}/terrace-rooftop.svg`,
+  "Valoración de jardín Green Gibb": `${A}/team-working.svg`,
+  "Mapa de cobertura Monterrey zona metropolitana": `${A}/coverage-map.svg`,
+  "Detalle de plantas y materiales": `${A}/materials-detail.svg`,
+  "Proyecto de paisajismo terminado": `${A}/project-residential.svg`,
+
+  "Jardín residencial San Pedro fachada": `${A}/project-residential.svg`,
+  "Jardín San Pedro zona de estar": `${A}/project-residential.svg`,
+  "Jardín San Pedro iluminación nocturna": `${A}/after-garden.svg`,
+  "Jardín San Pedro vegetación": `${A}/materials-detail.svg`,
+  "Jardín San Pedro andador": `${A}/project-residential.svg`,
+  "Jardín San Pedro antes": `${A}/before-garden.svg`,
+  "Jardín San Pedro después": `${A}/after-garden.svg`,
+  "Muro verde restaurante acceso": `${A}/green-wall.svg`,
+  "Muro verde restaurante detalle": `${A}/green-wall.svg`,
+  "Muro verde restaurante noche": `${A}/green-wall.svg`,
+  "Muro verde restaurante texturas": `${A}/materials-detail.svg`,
+  "Rooftop penthouse vista ciudad": `${A}/terrace-rooftop.svg`,
+  "Rooftop lounge con vegetación": `${A}/terrace-rooftop.svg`,
+  "Rooftop pérgola sombra": `${A}/terrace-rooftop.svg`,
+  "Rooftop iluminación nocturna": `${A}/terrace-rooftop.svg`,
+  "Rooftop jardineras perimetrales": `${A}/terrace-rooftop.svg`,
+  "Corporativo Apodaca acceso verde": `${A}/project-commercial.svg`,
+  "Corporativo jardineras": `${A}/project-commercial.svg`,
+  "Corporativo andador": `${A}/project-commercial.svg`,
+  "Corporativo zona de descanso": `${A}/project-commercial.svg`,
+  "Jardín vertical recepción oficina": `${A}/green-wall.svg`,
+  "Jardín vertical detalle especies": `${A}/green-wall.svg`,
+  "Jardín vertical recepción amplio": `${A}/green-wall.svg`,
+  "Patio interior jardín zen": `${A}/materials-detail.svg`,
+  "Patio interior piedra natural": `${A}/materials-detail.svg`,
+  "Patio interior vegetación de acento": `${A}/materials-detail.svg`,
+  "Patio interior punto de agua": `${A}/project-residential.svg`,
+  "Terraza restaurante ambientación viva": `${A}/terrace-rooftop.svg`,
+  "Terraza restaurante macetas": `${A}/terrace-rooftop.svg`,
+  "Terraza restaurante noche": `${A}/terrace-rooftop.svg`,
+  "Terraza restaurante vegetación aromática": `${A}/materials-detail.svg`,
+  "Acceso desarrollo García paisajismo": `${A}/project-commercial.svg`,
+  "Desarrollo García vegetación estructurada": `${A}/project-commercial.svg`,
+  "Desarrollo García iluminación de acceso": `${A}/project-commercial.svg`,
+
+  "Jardín residencial San Pedro": `${A}/project-residential.svg`,
+  "Patio interior con vegetación": `${A}/materials-detail.svg`,
+  "Entrada principal paisajismo": `${A}/project-residential.svg`,
+  "Plano de diseño de jardín": `${A}/services-hero.svg`,
+  "Render de paisajismo": `${A}/project-residential.svg`,
+  "Paleta vegetal Monterrey": `${A}/materials-detail.svg`,
+  "Muro verde recepción corporativa": `${A}/green-wall.svg`,
+  "Jardín vertical restaurante": `${A}/green-wall.svg`,
+  "Fachada con muro vivo": `${A}/green-wall.svg`,
+  "Jardín vertical balcón": `${A}/green-wall.svg`,
+  "Patio interior vertical": `${A}/green-wall.svg`,
+  "Modular verde terraza": `${A}/green-wall.svg`,
+  "Decoración terraza con macetas": `${A}/terrace-rooftop.svg`,
+  "Iluminación exterior jardín": `${A}/after-garden.svg`,
+  "Composición de jardineras": `${A}/products-clean.svg`,
+  "Equipo de mantenimiento de jardines": `${A}/team-working.svg`,
+  "Poda profesional": `${A}/team-working.svg`,
+  "Área verde corporativa cuidada": `${A}/project-commercial.svg`,
+  "Paisajismo desarrollo residencial": `${A}/project-commercial.svg`,
+  "Áreas verdes corporativas": `${A}/project-commercial.svg`,
+  "Acceso comercial con jardinería": `${A}/project-commercial.svg`,
+  "Rooftop con jardín y vista": `${A}/terrace-rooftop.svg`,
+  "Terraza de estar con vegetación": `${A}/terrace-rooftop.svg`,
+  "Patio convertido en estancia": `${A}/project-residential.svg`,
+
+  "Maceta terracota grande": `${A}/products-clean.svg`,
+  "Maceta terracota detalle": `${A}/products-clean.svg`,
+  "Maceta concreto minimalista": `${A}/products-clean.svg`,
+  "Maceta concreto set": `${A}/products-clean.svg`,
+  "Olivo europeo mediano": `${A}/products-clean.svg`,
+  "Olivo follaje detalle": `${A}/materials-detail.svg`,
+  "Palma areca interior": `${A}/products-clean.svg`,
+  "Palma areca maceta": `${A}/products-clean.svg`,
+  "Jardinera madera rectangular": `${A}/products-clean.svg`,
+  "Jardinera madera con plantas": `${A}/products-clean.svg`,
+  "Panel jardín vertical modular": `${A}/green-wall.svg`,
+  "Panel jardín vertical instalado": `${A}/green-wall.svg`,
+  "Set tres macetas concreto": `${A}/products-clean.svg`,
+  "Set macetas composición": `${A}/products-clean.svg`,
+  "Lámpara solar exterior": `${A}/after-garden.svg`,
+  "Lámpara solar jardín noche": `${A}/after-garden.svg`,
+  "Kit suculentas exterior": `${A}/products-clean.svg`,
+  "Suculentas composición": `${A}/products-clean.svg`,
+  "Piezas decorativas piedra": `${A}/materials-detail.svg`,
+  "Piedra natural jardín": `${A}/materials-detail.svg`,
+  "Sistema riego goteo": `${A}/materials-detail.svg`,
+  "Riego goteo instalado": `${A}/materials-detail.svg`,
+  "Kit hierbas aromáticas": `${A}/products-clean.svg`,
+  "Aromáticas jardinera": `${A}/products-clean.svg`,
+
+  "Jardín moderno casa Monterrey": `${A}/blog-editorial.svg`,
+  "Plantas de exterior Monterrey": `${A}/blog-editorial.svg`,
+  "Beneficios muro verde": `${A}/green-wall.svg`,
+  "Plusvalía casa paisajismo": `${A}/blog-editorial.svg`,
+  "Errores diseño jardín": `${A}/blog-editorial.svg`,
+  "Mantenimiento áreas verdes clima cálido": `${A}/blog-editorial.svg`,
+};
+
+export function resolveImageSrc(src: string): string {
+  return IMAGE_ASSETS[src] ?? src;
+}
 
 function hash(str: string): number {
   let h = 0;
@@ -44,7 +157,6 @@ interface PlaceholderOptions {
   height?: number;
 }
 
-/** Devuelve un SVG (string) de marca para un label dado. */
 export function placeholderSvg({
   label = "Green Gibb",
   variant,
@@ -81,13 +193,12 @@ export function placeholderSvg({
 </svg>`;
 }
 
-/** Devuelve un data URI listo para usar en `src`. */
 export function placeholderDataUri(options: PlaceholderOptions): string {
   const svg = placeholderSvg(options);
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
-/** True si el string es una URL de imagen real (no un label de placeholder). */
 export function isRealImage(src: string): boolean {
-  return /^(https?:)?\/\//.test(src) || src.startsWith("/images/");
+  const resolved = resolveImageSrc(src);
+  return /^(https?:)?\/\//.test(resolved) || resolved.startsWith("/images/");
 }
