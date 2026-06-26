@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { isRealImage, placeholderDataUri } from "@/lib/placeholder";
+import { isRealImage, placeholderDataUri, resolveImageSrc } from "@/lib/placeholder";
 
 type Variant = "green" | "olive" | "sand" | "terracotta" | "stone" | "cream";
 
 interface FigureProps {
-  /** URL real (http/https o /images/...) o label de placeholder de marca. */
+  /** URL real (/images/..., http/https) o label de placeholder de marca. */
   src: string;
   alt: string;
   variant?: Variant;
@@ -19,10 +19,9 @@ interface FigureProps {
 
 /**
  * Imagen unificada del sitio.
- * - Si `src` es una URL real, usa next/image (optimización + lazy loading).
- * - Si es un label, genera un placeholder SVG de marca (sin red, sin derechos).
- *
- * El contenedor debe definir tamaño/aspect ratio vía `className`.
+ * - Si `src` tiene un asset asignado en `lib/placeholder.ts`, usa esa imagen.
+ * - Si `src` es una URL real, usa next/image.
+ * - Si `src` sigue siendo un label sin asset, genera un placeholder SVG de marca.
  */
 export function Figure({
   src,
@@ -33,11 +32,15 @@ export function Figure({
   className,
   imgClassName,
 }: FigureProps) {
+  const resolvedSrc = resolveImageSrc(src);
+  const realImage = isRealImage(src);
+  const isSvg = resolvedSrc.endsWith(".svg");
+
   return (
     <div className={cn("relative overflow-hidden bg-cream-dark", className)}>
-      {isRealImage(src) ? (
+      {realImage && !isSvg ? (
         <Image
-          src={src}
+          src={resolvedSrc}
           alt={alt}
           fill
           priority={priority}
@@ -47,7 +50,7 @@ export function Figure({
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={placeholderDataUri({ label: src, variant })}
+          src={realImage ? resolvedSrc : placeholderDataUri({ label: src, variant })}
           alt={alt}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
