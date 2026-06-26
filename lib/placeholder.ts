@@ -24,8 +24,8 @@ const A = "/images/green-gibb";
 const IMAGE_ASSETS: Record<string, string> = {
   // Global / páginas principales
   "Jardín residencial premium Monterrey": `${A}/hero-home.jpg`,
-  "Servicios de paisajismo Green Gibb": `${A}/project-commercial.jpg`,
-  "Portafolio de paisajismo Monterrey": `${A}/project-residential.jpg`,
+  "Servicios de paisajismo Green Gibb": `${A}/corporativo-apodaca-acceso-verde.jpg`,
+  "Portafolio de paisajismo Monterrey": `${A}/paisajismo-desarrollo-residencial.jpg`,
   "Tienda de plantas y macetas Green Gibb": `${A}/products-clean.jpg`,
   "Equipo Green Gibb paisajismo": `${A}/team-working.jpg`,
   "Contacto Green Gibb paisajismo": `${A}/team-working.jpg`,
@@ -33,9 +33,9 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Jardín diseñado con intención": `${A}/project-residential.jpg`,
   "Terraza con vegetación natural": `${A}/terraza-estar-vegetacion.jpg`,
   "Valoración de jardín Green Gibb": `${A}/team-working.jpg`,
-  "Mapa de cobertura Monterrey zona metropolitana": `${A}/project-commercial.jpg`,
+  "Mapa de cobertura Monterrey zona metropolitana": `${A}/areas-verdes-corporativas.jpg`,
   "Detalle de plantas y materiales": `${A}/foliage-textures.jpg`,
-  "Proyecto de paisajismo terminado": `${A}/project-residential.jpg`,
+  "Proyecto de paisajismo terminado": `${A}/paisajismo-desarrollo-residencial.jpg`,
 
   // Proyectos
   // Fase 1 — Jardín residencial San Pedro (fotografía específica)
@@ -59,10 +59,11 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Rooftop iluminación nocturna": `${A}/rooftop-iluminacion-nocturna.jpg`,
   "Rooftop jardineras perimetrales": `${A}/rooftop-jardineras-perimetrales.jpg`,
 
-  "Corporativo Apodaca acceso verde": `${A}/project-commercial.jpg`,
-  "Corporativo jardineras": `${A}/project-commercial.jpg`,
-  "Corporativo andador": `${A}/project-commercial.jpg`,
-  "Corporativo zona de descanso": `${A}/project-commercial.jpg`,
+  // Fase 4 — Corporativo Apodaca
+  "Corporativo Apodaca acceso verde": `${A}/corporativo-apodaca-acceso-verde.jpg`,
+  "Corporativo jardineras": `${A}/corporativo-jardineras.jpg`,
+  "Corporativo andador": `${A}/corporativo-andador.jpg`,
+  "Corporativo zona de descanso": `${A}/corporativo-zona-descanso.jpg`,
 
   "Jardín vertical recepción oficina": `${A}/green-wall.jpg`,
   "Jardín vertical detalle especies": `${A}/green-wall.jpg`,
@@ -80,9 +81,10 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Terraza restaurante noche": `${A}/terraza-restaurante-noche.jpg`,
   "Terraza restaurante vegetación aromática": `${A}/terraza-restaurante-vegetacion-aromatica.jpg`,
 
-  "Acceso desarrollo García paisajismo": `${A}/project-commercial.jpg`,
-  "Desarrollo García vegetación estructurada": `${A}/project-commercial.jpg`,
-  "Desarrollo García iluminación de acceso": `${A}/garden-night.jpg`,
+  // Fase 4 — Desarrollo García
+  "Acceso desarrollo García paisajismo": `${A}/acceso-desarrollo-garcia-paisajismo.jpg`,
+  "Desarrollo García vegetación estructurada": `${A}/desarrollo-garcia-vegetacion-estructurada.jpg`,
+  "Desarrollo García iluminación de acceso": `${A}/desarrollo-garcia-iluminacion-acceso.jpg`,
 
   // Servicios
   "Jardín residencial San Pedro": `${A}/jardin-san-pedro-fachada.jpg`,
@@ -107,9 +109,10 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Poda profesional": `${A}/team-working.jpg`,
   "Área verde corporativa cuidada": `${A}/project-commercial.jpg`,
 
-  "Paisajismo desarrollo residencial": `${A}/project-commercial.jpg`,
-  "Áreas verdes corporativas": `${A}/project-commercial.jpg`,
-  "Acceso comercial con jardinería": `${A}/project-commercial.jpg`,
+  // Fase 4 — Comercial / desarrollos
+  "Paisajismo desarrollo residencial": `${A}/paisajismo-desarrollo-residencial.jpg`,
+  "Áreas verdes corporativas": `${A}/areas-verdes-corporativas.jpg`,
+  "Acceso comercial con jardinería": `${A}/acceso-comercial-jardineria.jpg`,
 
   "Rooftop con jardín y vista": `${A}/rooftop-penthouse-vista-ciudad.jpg`,
   "Terraza de estar con vegetación": `${A}/terraza-estar-vegetacion.jpg`,
