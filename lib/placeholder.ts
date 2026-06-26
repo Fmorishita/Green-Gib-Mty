@@ -31,7 +31,7 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Contacto Green Gibb paisajismo": `${A}/team-working.jpg`,
   "Texturas naturales Green Gibb": `${A}/foliage-textures.jpg`,
   "Jardín diseñado con intención": `${A}/project-residential.jpg`,
-  "Terraza con vegetación natural": `${A}/terrace-rooftop.jpg`,
+  "Terraza con vegetación natural": `${A}/terraza-estar-vegetacion.jpg`,
   "Valoración de jardín Green Gibb": `${A}/team-working.jpg`,
   "Mapa de cobertura Monterrey zona metropolitana": `${A}/project-commercial.jpg`,
   "Detalle de plantas y materiales": `${A}/foliage-textures.jpg`,
@@ -52,11 +52,12 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Muro verde restaurante noche": `${A}/green-wall.jpg`,
   "Muro verde restaurante texturas": `${A}/foliage-textures.jpg`,
 
-  "Rooftop penthouse vista ciudad": `${A}/terrace-rooftop.jpg`,
-  "Rooftop lounge con vegetación": `${A}/terrace-rooftop.jpg`,
-  "Rooftop pérgola sombra": `${A}/terrace-rooftop.jpg`,
-  "Rooftop iluminación nocturna": `${A}/garden-night.jpg`,
-  "Rooftop jardineras perimetrales": `${A}/terrace-rooftop.jpg`,
+  // Fase 3 — Rooftop penthouse (Centrito Valle)
+  "Rooftop penthouse vista ciudad": `${A}/rooftop-penthouse-vista-ciudad.jpg`,
+  "Rooftop lounge con vegetación": `${A}/rooftop-lounge-vegetacion.jpg`,
+  "Rooftop pérgola sombra": `${A}/rooftop-pergola-sombra.jpg`,
+  "Rooftop iluminación nocturna": `${A}/rooftop-iluminacion-nocturna.jpg`,
+  "Rooftop jardineras perimetrales": `${A}/rooftop-jardineras-perimetrales.jpg`,
 
   "Corporativo Apodaca acceso verde": `${A}/project-commercial.jpg`,
   "Corporativo jardineras": `${A}/project-commercial.jpg`,
@@ -73,10 +74,11 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Patio interior vegetación de acento": `${A}/patio-interior-vegetacion-acento.jpg`,
   "Patio interior punto de agua": `${A}/patio-interior-punto-agua.jpg`,
 
-  "Terraza restaurante ambientación viva": `${A}/terrace-rooftop.jpg`,
-  "Terraza restaurante macetas": `${A}/products-clean.jpg`,
-  "Terraza restaurante noche": `${A}/garden-night.jpg`,
-  "Terraza restaurante vegetación aromática": `${A}/foliage-textures.jpg`,
+  // Fase 3 — Terraza de restaurante (Santa Lucía)
+  "Terraza restaurante ambientación viva": `${A}/terraza-restaurante-ambientacion-viva.jpg`,
+  "Terraza restaurante macetas": `${A}/terraza-restaurante-macetas.jpg`,
+  "Terraza restaurante noche": `${A}/terraza-restaurante-noche.jpg`,
+  "Terraza restaurante vegetación aromática": `${A}/terraza-restaurante-vegetacion-aromatica.jpg`,
 
   "Acceso desarrollo García paisajismo": `${A}/project-commercial.jpg`,
   "Desarrollo García vegetación estructurada": `${A}/project-commercial.jpg`,
@@ -97,9 +99,9 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Patio interior vertical": `${A}/green-wall.jpg`,
   "Modular verde terraza": `${A}/green-wall.jpg`,
 
-  "Decoración terraza con macetas": `${A}/products-clean.jpg`,
-  "Iluminación exterior jardín": `${A}/garden-night.jpg`,
-  "Composición de jardineras": `${A}/products-clean.jpg`,
+  "Decoración terraza con macetas": `${A}/terraza-restaurante-macetas.jpg`,
+  "Iluminación exterior jardín": `${A}/rooftop-iluminacion-nocturna.jpg`,
+  "Composición de jardineras": `${A}/rooftop-jardineras-perimetrales.jpg`,
 
   "Equipo de mantenimiento de jardines": `${A}/team-working.jpg`,
   "Poda profesional": `${A}/team-working.jpg`,
@@ -109,8 +111,8 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Áreas verdes corporativas": `${A}/project-commercial.jpg`,
   "Acceso comercial con jardinería": `${A}/project-commercial.jpg`,
 
-  "Rooftop con jardín y vista": `${A}/terrace-rooftop.jpg`,
-  "Terraza de estar con vegetación": `${A}/terrace-rooftop.jpg`,
+  "Rooftop con jardín y vista": `${A}/rooftop-penthouse-vista-ciudad.jpg`,
+  "Terraza de estar con vegetación": `${A}/terraza-estar-vegetacion.jpg`,
   "Patio convertido en estancia": `${A}/jardin-san-pedro-zona-estar.jpg`,
 
   // Productos
