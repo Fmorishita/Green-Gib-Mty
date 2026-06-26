@@ -38,13 +38,14 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Proyecto de paisajismo terminado": `${A}/project-residential.jpg`,
 
   // Proyectos
-  "Jardín residencial San Pedro fachada": `${A}/project-residential.jpg`,
-  "Jardín San Pedro zona de estar": `${A}/project-residential.jpg`,
+  // Fase 1 — Jardín residencial San Pedro (fotografía específica)
+  "Jardín residencial San Pedro fachada": `${A}/jardin-san-pedro-fachada.jpg`,
+  "Jardín San Pedro zona de estar": `${A}/jardin-san-pedro-zona-estar.jpg`,
   "Jardín San Pedro iluminación nocturna": `${A}/garden-night.jpg`,
-  "Jardín San Pedro vegetación": `${A}/foliage-textures.jpg`,
-  "Jardín San Pedro andador": `${A}/project-residential.jpg`,
-  "Jardín San Pedro antes": `${A}/before-after-transformation.jpg`,
-  "Jardín San Pedro después": `${A}/before-after-transformation.jpg`,
+  "Jardín San Pedro vegetación": `${A}/jardin-san-pedro-vegetacion.jpg`,
+  "Jardín San Pedro andador": `${A}/jardin-san-pedro-andador.jpg`,
+  "Jardín San Pedro antes": `${A}/jardin-san-pedro-antes.jpg`,
+  "Jardín San Pedro después": `${A}/jardin-san-pedro-despues.jpg`,
 
   "Muro verde restaurante acceso": `${A}/green-wall.jpg`,
   "Muro verde restaurante detalle": `${A}/green-wall.jpg`,
@@ -66,10 +67,11 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Jardín vertical detalle especies": `${A}/green-wall.jpg`,
   "Jardín vertical recepción amplio": `${A}/green-wall.jpg`,
 
-  "Patio interior jardín zen": `${A}/foliage-textures.jpg`,
-  "Patio interior piedra natural": `${A}/foliage-textures.jpg`,
-  "Patio interior vegetación de acento": `${A}/foliage-textures.jpg`,
-  "Patio interior punto de agua": `${A}/project-residential.jpg`,
+  // Fase 1 — Patio interior (Carretera Nacional)
+  "Patio interior jardín zen": `${A}/patio-interior-jardin-zen.jpg`,
+  "Patio interior piedra natural": `${A}/patio-interior-piedra-natural.jpg`,
+  "Patio interior vegetación de acento": `${A}/patio-interior-vegetacion-acento.jpg`,
+  "Patio interior punto de agua": `${A}/patio-interior-punto-agua.jpg`,
 
   "Terraza restaurante ambientación viva": `${A}/terrace-rooftop.jpg`,
   "Terraza restaurante macetas": `${A}/products-clean.jpg`,
@@ -81,9 +83,9 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Desarrollo García iluminación de acceso": `${A}/garden-night.jpg`,
 
   // Servicios
-  "Jardín residencial San Pedro": `${A}/project-residential.jpg`,
-  "Patio interior con vegetación": `${A}/foliage-textures.jpg`,
-  "Entrada principal paisajismo": `${A}/project-residential.jpg`,
+  "Jardín residencial San Pedro": `${A}/jardin-san-pedro-fachada.jpg`,
+  "Patio interior con vegetación": `${A}/patio-interior-vegetacion-acento.jpg`,
+  "Entrada principal paisajismo": `${A}/jardin-san-pedro-andador.jpg`,
   "Plano de diseño de jardín": `${A}/project-commercial.jpg`,
   "Render de paisajismo": `${A}/project-residential.jpg`,
   "Paleta vegetal Monterrey": `${A}/foliage-textures.jpg`,
@@ -109,7 +111,7 @@ const IMAGE_ASSETS: Record<string, string> = {
 
   "Rooftop con jardín y vista": `${A}/terrace-rooftop.jpg`,
   "Terraza de estar con vegetación": `${A}/terrace-rooftop.jpg`,
-  "Patio convertido en estancia": `${A}/project-residential.jpg`,
+  "Patio convertido en estancia": `${A}/jardin-san-pedro-zona-estar.jpg`,
 
   // Productos
   "Maceta terracota grande": `${A}/products-clean.jpg`,
