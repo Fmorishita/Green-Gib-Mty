@@ -114,7 +114,7 @@ const IMAGE_ASSETS: Record<string, string> = {
 
   "Equipo de mantenimiento de jardines": `${A}/team-working.jpg`,
   "Poda profesional": `${A}/team-working.jpg`,
-  "Área verde corporativa cuidada": `${A}/project-commercial.jpg`,
+  "Área verde corporativa cuidada": `${A}/jardin-hotel-senderos.jpg`,
 
   // Fase 4 — Comercial / desarrollos
   "Paisajismo desarrollo residencial": `${A}/paisajismo-desarrollo-residencial.jpg`,
@@ -126,26 +126,27 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Patio convertido en estancia": `${A}/patio-convertido-estancia.jpg`,
 
   // Productos
-  "Maceta terracota grande": `${A}/products-clean.jpg`,
-  "Maceta terracota detalle": `${A}/products-clean.jpg`,
-  "Maceta concreto minimalista": `${A}/products-clean.jpg`,
-  "Maceta concreto set": `${A}/products-clean.jpg`,
+  // Fase 7 — Macetas (fotografía de producto)
+  "Maceta terracota grande": `${A}/producto-maceta-terracota-grande.jpg`,
+  "Maceta terracota detalle": `${A}/producto-maceta-terracota-detalle.jpg`,
+  "Maceta concreto minimalista": `${A}/producto-maceta-concreto-minimalista.jpg`,
+  "Maceta concreto set": `${A}/producto-maceta-concreto-set.jpg`,
   "Olivo europeo mediano": `${A}/products-clean.jpg`,
   "Olivo follaje detalle": `${A}/foliage-textures.jpg`,
   "Palma areca interior": `${A}/products-clean.jpg`,
   "Palma areca maceta": `${A}/products-clean.jpg`,
-  "Jardinera madera rectangular": `${A}/products-clean.jpg`,
-  "Jardinera madera con plantas": `${A}/products-clean.jpg`,
+  "Jardinera madera rectangular": `${A}/producto-jardinera-madera-rectangular.jpg`,
+  "Jardinera madera con plantas": `${A}/producto-jardinera-madera-plantas.jpg`,
   "Panel jardín vertical modular": `${A}/green-wall.jpg`,
   "Panel jardín vertical instalado": `${A}/green-wall.jpg`,
-  "Set tres macetas concreto": `${A}/products-clean.jpg`,
-  "Set macetas composición": `${A}/products-clean.jpg`,
+  "Set tres macetas concreto": `${A}/producto-set-macetas-concreto-trio.jpg`,
+  "Set macetas composición": `${A}/producto-set-macetas-composicion.jpg`,
   "Lámpara solar exterior": `${A}/garden-night.jpg`,
   "Lámpara solar jardín noche": `${A}/garden-night.jpg`,
   "Kit suculentas exterior": `${A}/products-clean.jpg`,
   "Suculentas composición": `${A}/products-clean.jpg`,
-  "Piezas decorativas piedra": `${A}/foliage-textures.jpg`,
-  "Piedra natural jardín": `${A}/foliage-textures.jpg`,
+  "Piezas decorativas piedra": `${A}/producto-piezas-decorativas-piedra.jpg`,
+  "Piedra natural jardín": `${A}/producto-piedra-natural-jardin.jpg`,
   "Sistema riego goteo": `${A}/foliage-textures.jpg`,
   "Riego goteo instalado": `${A}/foliage-textures.jpg`,
   "Kit hierbas aromáticas": `${A}/products-clean.jpg`,
@@ -158,6 +159,18 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Plusvalía casa paisajismo": `${A}/project-residential.jpg`,
   "Errores diseño jardín": `${A}/before-after-transformation.jpg`,
   "Mantenimiento áreas verdes clima cálido": `${A}/team-working.jpg`,
+
+  // Fase 6 — Hotelería / amenidades premium (disponibles para tarjetas futuras)
+  "Hotel boutique entrada verde": `${A}/hotel-boutique-entrada-verde.jpg`,
+  "Hotel boutique patio interior": `${A}/hotel-boutique-patio-interior.jpg`,
+  "Hotel rooftop bar vegetación": `${A}/hotel-rooftop-bar-vegetacion.jpg`,
+  "Spa exterior relajación": `${A}/spa-exterior-relajacion.jpg`,
+  "Spa interior natural": `${A}/spa-interior-natural.jpg`,
+  "Hotel piscina vegetación": `${A}/hotel-piscina-vegetacion.jpg`,
+  "Restaurante terraza verde": `${A}/restaurante-terraza-verde.jpg`,
+  "Lounge amenidad premium": `${A}/lounge-amenidad-premium.jpg`,
+  "Jardín hotel senderos": `${A}/jardin-hotel-senderos.jpg`,
+  "Iluminación amenidades nocturna": `${A}/iluminacion-amenidades-nocturna.jpg`,
 };
 
 /** Resuelve un label de mock data a su ruta de imagen real, si existe. */
