@@ -218,6 +218,69 @@ export const projects: Project[] = [
     ],
     featured: false,
   },
+  {
+    id: "p9",
+    slug: "hotel-boutique-carretera-nacional",
+    title: "Hotel boutique en Carretera Nacional",
+    category: "Comercial",
+    location: "Carretera Nacional, Monterrey",
+    description:
+      "Paisajismo integral de un hotel boutique: acceso, patio interior, rooftop bar, piscina y senderos, pensado para una experiencia de hospedaje memorable y muy fotografiable.",
+    challenge:
+      "El hotel necesitaba una identidad verde coherente en todos sus espacios —llegada, amenidades y áreas de estar— que comunicara nivel premium y se sintiera viva de día y de noche.",
+    solution:
+      "Diseñamos un lenguaje vegetal continuo: una entrada de bienvenida, un patio interior fresco, vegetación en el rooftop bar y la piscina, senderos ajardinados e iluminación nocturna que realza cada amenidad.",
+    cover_image: "Hotel boutique entrada verde",
+    gallery: [
+      "Hotel boutique patio interior",
+      "Hotel rooftop bar vegetación",
+      "Hotel piscina vegetación",
+      "Jardín hotel senderos",
+      "Iluminación amenidades nocturna",
+    ],
+    services: [
+      "Proyectos comerciales",
+      "Muros verdes",
+      "Decoración exterior",
+      "Mantenimiento de áreas verdes",
+    ],
+    details: [
+      { label: "Superficie", value: "1,800 m²" },
+      { label: "Duración", value: "10 semanas" },
+      { label: "Tipo", value: "Hotelería boutique" },
+    ],
+    featured: false,
+  },
+  {
+    id: "p10",
+    slug: "spa-y-amenidades-valle-alto",
+    title: "Spa y amenidades en desarrollo residencial",
+    category: "Comercial",
+    location: "Valle Alto, Monterrey",
+    description:
+      "Diseño de las amenidades premium de un desarrollo residencial: spa exterior e interior, lounge y terraza de restaurante, integrando naturaleza para una sensación de bienestar.",
+    challenge:
+      "Las amenidades debían transmitir relajación y exclusividad, conectando los espacios interiores con la vegetación exterior para diferenciar al desarrollo.",
+    solution:
+      "Creamos un spa exterior rodeado de vegetación, un interior con presencia natural, un lounge de estar y una terraza de restaurante verde, con una paleta serena y materiales nobles.",
+    cover_image: "Spa exterior relajación",
+    gallery: [
+      "Spa interior natural",
+      "Lounge amenidad premium",
+      "Restaurante terraza verde",
+    ],
+    services: [
+      "Proyectos comerciales",
+      "Decoración exterior",
+      "Jardineras y macetas decorativas",
+    ],
+    details: [
+      { label: "Superficie", value: "950 m²" },
+      { label: "Duración", value: "8 semanas" },
+      { label: "Tipo", value: "Amenidades residenciales" },
+    ],
+    featured: false,
+  },
 ];
 
 export const projectCategories = [
