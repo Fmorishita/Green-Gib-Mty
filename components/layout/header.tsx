@@ -37,6 +37,7 @@ export function Header() {
   }, [menuOpen]);
 
   return (
+    <>
     <header
       className={cn(
         "sticky top-0 z-50 transition-all duration-300 ease-smooth",
@@ -85,8 +86,9 @@ export function Header() {
           </button>
         </div>
       </Container>
+    </header>
 
-      <AnimatePresence>
+    <AnimatePresence>
         {menuOpen && (
           <motion.div
             className="fixed inset-0 z-[60] lg:hidden"
@@ -140,6 +142,6 @@ export function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

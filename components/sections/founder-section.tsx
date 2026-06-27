@@ -102,7 +102,7 @@ export function FounderSection({ variant = "home" }: FounderSectionProps) {
     <section id="fundador" className="bg-cream-dark/40 py-section">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <MotionSection>
+          <MotionSection className="order-2 lg:order-1">
             <p className="text-eyebrow font-semibold uppercase text-green-olive">
               {founderHome.eyebrow}
             </p>
@@ -142,7 +142,7 @@ export function FounderSection({ variant = "home" }: FounderSectionProps) {
             </div>
           </MotionSection>
 
-          <MotionSection delay={1} className="lg:pl-6">
+          <MotionSection delay={1} className="order-1 mb-8 lg:order-2 lg:mb-0 lg:pl-6">
             <FounderPortrait priority />
           </MotionSection>
         </div>
