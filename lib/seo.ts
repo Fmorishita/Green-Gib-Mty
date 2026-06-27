@@ -144,7 +144,7 @@ export function articleJsonLd(params: {
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/images/brand/logo.svg` },
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/images/brand/logo.png` },
     },
   };
 }
