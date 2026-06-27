@@ -47,10 +47,11 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Jardín San Pedro antes": `${A}/jardin-san-pedro-antes.jpg`,
   "Jardín San Pedro después": `${A}/jardin-san-pedro-despues.jpg`,
 
-  "Muro verde restaurante acceso": `${A}/green-wall.jpg`,
-  "Muro verde restaurante detalle": `${A}/green-wall.jpg`,
-  "Muro verde restaurante noche": `${A}/green-wall.jpg`,
-  "Muro verde restaurante texturas": `${A}/foliage-textures.jpg`,
+  // Fase 2 — Muro verde restaurante (Valle Oriente)
+  "Muro verde restaurante acceso": `${A}/muro-verde-restaurante-acceso.jpg`,
+  "Muro verde restaurante detalle": `${A}/muro-verde-restaurante-detalle.jpg`,
+  "Muro verde restaurante noche": `${A}/muro-verde-restaurante-noche.jpg`,
+  "Muro verde restaurante texturas": `${A}/muro-verde-restaurante-texturas.jpg`,
 
   // Fase 3 — Rooftop penthouse (Centrito Valle)
   "Rooftop penthouse vista ciudad": `${A}/rooftop-penthouse-vista-ciudad.jpg`,
@@ -65,9 +66,10 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Corporativo andador": `${A}/corporativo-andador.jpg`,
   "Corporativo zona de descanso": `${A}/corporativo-zona-descanso.jpg`,
 
-  "Jardín vertical recepción oficina": `${A}/green-wall.jpg`,
-  "Jardín vertical detalle especies": `${A}/green-wall.jpg`,
-  "Jardín vertical recepción amplio": `${A}/green-wall.jpg`,
+  // Fase 2 — Jardín vertical recepción oficina (Cumbres)
+  "Jardín vertical recepción oficina": `${A}/jardin-vertical-recepcion-oficina.jpg`,
+  "Jardín vertical detalle especies": `${A}/jardin-vertical-detalle-especies.jpg`,
+  "Jardín vertical recepción amplio": `${A}/jardin-vertical-recepcion-amplio.jpg`,
 
   // Fase 1 — Patio interior (Carretera Nacional)
   "Patio interior jardín zen": `${A}/patio-interior-jardin-zen.jpg`,
@@ -96,11 +98,13 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Render de paisajismo": `${A}/render-paisajismo.jpg`,
   "Paleta vegetal Monterrey": `${A}/paleta-vegetal-monterrey.jpg`,
 
-  "Muro verde recepción corporativa": `${A}/green-wall.jpg`,
-  "Jardín vertical restaurante": `${A}/green-wall.jpg`,
-  "Fachada con muro vivo": `${A}/green-wall.jpg`,
-  "Jardín vertical balcón": `${A}/green-wall.jpg`,
-  "Patio interior vertical": `${A}/green-wall.jpg`,
+  // Fase 2 — Muros verdes / jardines verticales (servicios)
+  "Muro verde recepción corporativa": `${A}/muro-verde-recepcion-corporativa.jpg`,
+  "Jardín vertical restaurante": `${A}/muro-verde-restaurante-acceso.jpg`,
+  "Fachada con muro vivo": `${A}/fachada-con-muro-vivo.jpg`,
+  "Jardín vertical balcón": `${A}/jardin-vertical-balcon.jpg`,
+  "Patio interior vertical": `${A}/jardin-vertical-recepcion-oficina.jpg`,
+  // "Modular verde terraza" conserva la imagen dedicada de Fase 5 (modular-verde-terraza.jpg)
   "Modular verde terraza": `${A}/modular-verde-terraza.jpg`,
 
   // Fase 5 — Decoración exterior
