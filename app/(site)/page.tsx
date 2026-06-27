@@ -13,6 +13,7 @@ import { ProjectCard } from "@/components/cards/project-card";
 import { ProductCard } from "@/components/cards/product-card";
 import { TestimonialCard } from "@/components/cards/testimonial-card";
 import { LeadForm } from "@/components/forms/lead-form";
+import { FounderSection } from "@/components/sections/founder-section";
 import { Figure } from "@/components/ui/figure";
 import { getFeaturedServices } from "@/lib/data/services";
 import { getFeaturedProjects, projects } from "@/lib/data/projects";
@@ -165,6 +166,9 @@ export default function HomePage() {
           </Container>
         </section>
       )}
+
+      {/* Fundador */}
+      <FounderSection variant="home" />
 
       {/* Diferenciadores */}
       <section className="py-section">

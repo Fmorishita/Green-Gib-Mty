@@ -36,6 +36,7 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Mapa de cobertura Monterrey zona metropolitana": `${A}/areas-verdes-corporativas.jpg`,
   "Detalle de plantas y materiales": `${A}/foliage-textures.jpg`,
   "Proyecto de paisajismo terminado": `${A}/paisajismo-desarrollo-residencial.jpg`,
+  "Fundador Mario Green Gib": `${A}/fundador-mario-green-gib.png`,
 
   // Proyectos
   // Fase 1 — Jardín residencial San Pedro (fotografía específica)
