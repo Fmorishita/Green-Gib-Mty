@@ -28,7 +28,7 @@ export default function BlogPage() {
         eyebrow="Blog y guías"
         title="Ideas para vivir mejor tus espacios exteriores"
         description="Consejos prácticos de diseño, plantas y mantenimiento pensados para el clima y el estilo de vida de Monterrey."
-        image="Blog de paisajismo Green Gibb"
+        image="Blog de paisajismo Green Gib"
         variant="olive"
         size="sm"
       />

@@ -12,7 +12,7 @@ export function ArticleContent({ content }: ArticleContentProps) {
   const blocks = content.trim().split(/\n\s*\n/);
 
   return (
-    <div className="prose-gibb max-w-none">
+    <div className="prose-gib max-w-none">
       {blocks.map((block, i) => {
         const trimmed = block.trim();
 

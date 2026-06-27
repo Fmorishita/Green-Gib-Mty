@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { resolveImageSrc } from "@/lib/placeholder";
 
-export const SITE_NAME = "Green Gibb";
+export const SITE_NAME = "Green Gib";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -28,6 +29,11 @@ interface PageMetaParams {
   keywords?: string[];
 }
 
+function imageUrl(image: string): string {
+  const resolved = resolveImageSrc(image);
+  return resolved.startsWith("/") ? `${SITE_URL}${resolved}` : resolved;
+}
+
 /** Genera Metadata consistente para cada página. */
 export function pageMetadata({
   title,
@@ -37,6 +43,7 @@ export function pageMetadata({
   keywords = DEFAULT_KEYWORDS,
 }: PageMetaParams): Metadata {
   const url = `${SITE_URL}${path}`;
+  const resolvedImage = imageUrl(image);
   const fullTitle =
     path === "/" ? `${SITE_NAME} — Paisajismo Premium en Monterrey` : `${title} | ${SITE_NAME}`;
 
@@ -52,13 +59,13 @@ export function pageMetadata({
       siteName: SITE_NAME,
       title: fullTitle,
       description,
-      images: [{ url: image, width: 1200, height: 630, alt: title }],
+      images: [{ url: resolvedImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [image],
+      images: [resolvedImage],
     },
   };
 }
@@ -84,7 +91,7 @@ export function localBusinessJsonLd() {
       addressRegion: "Nuevo León",
       addressCountry: "MX",
     },
-    sameAs: ["https://www.instagram.com/greengibb"],
+    sameAs: ["https://www.instagram.com/greengib"],
   };
 }
 
@@ -102,7 +109,7 @@ export function productJsonLd(params: {
     "@type": "Product",
     name: params.name,
     description: params.description,
-    image: params.image,
+    image: imageUrl(params.image),
     url: `${SITE_URL}/tienda/${params.slug}`,
     brand: { "@type": "Brand", name: SITE_NAME },
     offers: {
@@ -130,7 +137,7 @@ export function articleJsonLd(params: {
     "@type": "BlogPosting",
     headline: params.title,
     description: params.description,
-    image: params.image,
+    image: imageUrl(params.image),
     url: `${SITE_URL}/blog/${params.slug}`,
     datePublished: params.datePublished,
     author: { "@type": "Organization", name: params.author },

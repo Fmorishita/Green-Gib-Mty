@@ -27,7 +27,7 @@ export default function ServiciosPage() {
         eyebrow="Servicios"
         title="Soluciones de paisajismo para cada tipo de espacio"
         description="Diseñamos, ejecutamos y mantenemos. Desde un jardín residencial hasta las áreas verdes de un desarrollo, cubrimos todo el ciclo de tu proyecto."
-        image="Servicios de paisajismo Green Gibb"
+        image="Servicios de paisajismo Green Gib"
       />
 
       <section className="py-section">

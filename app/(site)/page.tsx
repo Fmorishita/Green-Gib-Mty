@@ -13,6 +13,7 @@ import { ProjectCard } from "@/components/cards/project-card";
 import { ProductCard } from "@/components/cards/product-card";
 import { TestimonialCard } from "@/components/cards/testimonial-card";
 import { LeadForm } from "@/components/forms/lead-form";
+import { FounderSection } from "@/components/sections/founder-section";
 import { Figure } from "@/components/ui/figure";
 import { getFeaturedServices } from "@/lib/data/services";
 import { getFeaturedProjects, projects } from "@/lib/data/projects";
@@ -42,7 +43,7 @@ export default function HomePage() {
                 Muchos espacios tienen potencial. Pocos están diseñados para aprovecharlo.
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-charcoal-muted">
-                En Green Gibb convertimos jardines, terrazas, patios y áreas exteriores en
+                En Green Gib convertimos jardines, terrazas, patios y áreas exteriores en
                 espacios funcionales, estéticos y memorables. No llenamos de plantas: diseñamos
                 con intención para que cada metro cuente.
               </p>
@@ -166,12 +167,15 @@ export default function HomePage() {
         </section>
       )}
 
+      {/* Fundador */}
+      <FounderSection variant="home" />
+
       {/* Diferenciadores */}
       <section className="py-section">
         <Container>
           <SectionTitle
             align="center"
-            eyebrow="Por qué Green Gibb"
+            eyebrow="Por qué Green Gib"
             title="Diseño, ejecución y acompañamiento en un solo equipo"
           />
           <MotionStagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -256,8 +260,8 @@ export default function HomePage() {
             <div className="grid lg:grid-cols-2">
               <div className="relative min-h-[280px] lg:min-h-full">
                 <Figure
-                  src="Valoración de jardín Green Gibb"
-                  alt="Especialista de Green Gibb valorando un jardín en Monterrey"
+                  src="Valoración de jardín Green Gib"
+                  alt="Especialista de Green Gib valorando un jardín en Monterrey"
                   variant="olive"
                   className="absolute inset-0 h-full w-full"
                   sizes="(max-width: 1024px) 100vw, 50vw"

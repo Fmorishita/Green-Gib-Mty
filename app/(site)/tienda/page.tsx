@@ -28,7 +28,7 @@ export default function TiendaPage() {
         eyebrow="Tienda"
         title="Productos para espacios naturales"
         description="Plantas, macetas, jardineras y decoración exterior seleccionadas para complementar tu espacio. Haz tu pedido por WhatsApp."
-        image="Tienda de plantas y macetas Green Gibb"
+        image="Tienda de plantas y macetas Green Gib"
         variant="sand"
         size="sm"
       />

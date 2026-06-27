@@ -16,7 +16,7 @@ function buildLink(message: string): string {
 /** Mensaje genérico de contacto. */
 export function whatsappGeneral(): string {
   return buildLink(
-    "Hola Green Gibb, me gustaría platicar sobre un proyecto de paisajismo."
+    "Hola Green Gib, me gustaría platicar sobre un proyecto de paisajismo."
   );
 }
 
@@ -25,19 +25,19 @@ export function whatsappQuote(params?: { name?: string; location?: string }): st
   const name = params?.name?.trim() || "___";
   const location = params?.location?.trim() || "___";
   return buildLink(
-    `Hola Green Gibb, me interesa cotizar un proyecto de paisajismo. Mi nombre es ${name} y el proyecto está ubicado en ${location}.`
+    `Hola Green Gib, me interesa cotizar un proyecto de paisajismo. Mi nombre es ${name} y el proyecto está ubicado en ${location}.`
   );
 }
 
 /** Caso 2 — Consulta de producto. */
 export function whatsappProduct(productName: string): string {
-  return buildLink(`Hola Green Gibb, me interesa este producto: ${productName}.`);
+  return buildLink(`Hola Green Gib, me interesa este producto: ${productName}.`);
 }
 
 /** Caso 3 — Pedido desde el carrito con resumen. */
 export function whatsappCart(items: CartItem[]): string {
   if (items.length === 0) {
-    return buildLink("Hola Green Gibb, quiero cotizar algunos productos.");
+    return buildLink("Hola Green Gib, quiero cotizar algunos productos.");
   }
   const lines = items
     .map(
@@ -47,20 +47,20 @@ export function whatsappCart(items: CartItem[]): string {
     .join("\n");
   const total = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
   return buildLink(
-    `Hola Green Gibb, quiero cotizar estos productos:\n${lines}\n\nTotal estimado: ${formatPrice(total)}`
+    `Hola Green Gib, quiero cotizar estos productos:\n${lines}\n\nTotal estimado: ${formatPrice(total)}`
   );
 }
 
 /** Caso 4 — Quiero un proyecto similar al del portafolio. */
 export function whatsappSimilarProject(projectTitle: string): string {
   return buildLink(
-    `Hola Green Gibb, vi este proyecto en su portafolio: ${projectTitle} y quiero algo similar.`
+    `Hola Green Gib, vi este proyecto en su portafolio: ${projectTitle} y quiero algo similar.`
   );
 }
 
 /** Caso 5 — Agendar valoración / lead magnet. */
 export function whatsappValuation(): string {
   return buildLink(
-    "Hola Green Gibb, me gustaría agendar una valoración para mi jardín o espacio exterior."
+    "Hola Green Gib, me gustaría agendar una valoración para mi jardín o espacio exterior."
   );
 }

@@ -1,8 +1,8 @@
 {
-  "name": "green-gibb",
+  "name": "green-gib",
   "version": "1.0.0",
   "private": true,
-  "description": "Sitio web premium de Green Gibb — paisajismo, jardines y decoración exterior en Monterrey.",
+  "description": "Sitio web premium de Green Gib — paisajismo, jardines y decoración exterior en Monterrey.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

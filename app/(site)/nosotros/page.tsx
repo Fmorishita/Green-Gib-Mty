@@ -5,16 +5,32 @@ import { Container } from "@/components/ui/container";
 import { SectionTitle } from "@/components/sections/section-title";
 import { ProcessSteps } from "@/components/sections/process-steps";
 import { CTASection } from "@/components/sections/cta-section";
+import { FounderSection } from "@/components/sections/founder-section";
 import { Figure } from "@/components/ui/figure";
 import { MotionSection, MotionStagger, MotionItem } from "@/components/sections/motion-section";
 import { differentiators } from "@/lib/data/site";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Nosotros — Paisajismo con diseño y ejecución",
+  title: "Nosotros — Fundador, innovación y arquitectura verde",
   description:
-    "Green Gibb es un equipo de paisajismo premium en Monterrey. Diseñamos, ejecutamos y mantenemos espacios verdes con criterio estético y técnico.",
+    "Green Gib está liderada por Mario Enrique Ávila Quintana, fundador y co-inventor del Jardín Vertical Colapsable (Título de Patente No. 407278, IMPI). Paisajismo, jardines verticales y muros verdes en Monterrey con diseño, instalación y mantenimiento.",
   path: "/nosotros",
+  keywords: [
+    "Mario Enrique Ávila Quintana",
+    "fundador de Green Gib",
+    "co-inventor Jardín Vertical Colapsable",
+    "patente Jardín Vertical Colapsable",
+    "IMPI",
+    "arquitectura verde",
+    "jardinería en Monterrey",
+    "diseño de jardines",
+    "jardines verticales",
+    "muros verdes",
+    "optimización de espacios",
+    "instalación de jardines",
+    "mantenimiento de áreas verdes",
+  ],
 });
 
 const values = [
@@ -46,8 +62,8 @@ export default function NosotrosPage() {
       <PageHero
         eyebrow="Nosotros"
         title="Somos quienes piensan tu espacio antes de plantarlo"
-        description="Green Gibb nace de una idea simple: los espacios exteriores merecen el mismo nivel de diseño y cuidado que el interior de una casa o un negocio."
-        image="Equipo Green Gibb paisajismo"
+        description="Green Gib nace de una idea simple: los espacios exteriores merecen el mismo nivel de diseño y cuidado que el interior de una casa o un negocio."
+        image="Equipo Green Gib paisajismo"
       />
 
       {/* Historia + filosofía */}
@@ -95,6 +111,9 @@ export default function NosotrosPage() {
           </div>
         </Container>
       </section>
+
+      {/* Fundador: perfil + patente */}
+      <FounderSection variant="about" />
 
       {/* Valores */}
       <section className="bg-cream-dark/50 py-section">

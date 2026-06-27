@@ -30,7 +30,7 @@ export const testimonials: Testimonial[] = [
     client_name: "Arq. Daniela M.",
     project_type: "Aliado de paisajismo",
     quote:
-      "Como arquitecta valoro trabajar con alguien que entiende diseño, materiales y ejecución. Green Gibb se ha vuelto mi aliado de paisajismo de confianza en mis proyectos.",
+      "Como arquitecta valoro trabajar con alguien que entiende diseño, materiales y ejecución. Green Gib se ha vuelto mi aliado de paisajismo de confianza en mis proyectos.",
     rating: 5,
     image: "Cliente Daniela",
     active: true,

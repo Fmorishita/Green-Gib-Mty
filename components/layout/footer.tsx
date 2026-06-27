@@ -23,7 +23,7 @@ export function Footer() {
                 href={siteConfig.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram de Green Gibb"
+                aria-label="Instagram de Green Gib"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-cream/10 transition-colors hover:bg-cream/20"
               >
                 <Instagram className="h-5 w-5" aria-hidden />
@@ -32,7 +32,7 @@ export function Footer() {
                 href={whatsappGeneral()}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="WhatsApp de Green Gibb"
+                aria-label="WhatsApp de Green Gib"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-cream/10 transition-colors hover:bg-cream/20"
               >
                 <MessageCircle className="h-5 w-5" aria-hidden />
@@ -96,7 +96,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-cream/15 pt-6 text-sm text-cream/60 sm:flex-row">
-          <p>© {year} Green Gibb. Todos los derechos reservados.</p>
+          <p>© {year} Green Gib. Todos los derechos reservados.</p>
           <p className="flex items-center gap-1.5">
             Diseñado con intención en Monterrey
           </p>

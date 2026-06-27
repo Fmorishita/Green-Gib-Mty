@@ -38,22 +38,22 @@
 
 @layer components {
   /* Contenido de artículos de blog renderizado desde texto */
-  .prose-gibb {
+  .prose-gib {
     @apply text-lg leading-relaxed text-charcoal;
   }
-  .prose-gibb h2 {
+  .prose-gib h2 {
     @apply mt-10 font-display text-2xl font-medium text-green-deep;
   }
-  .prose-gibb p {
+  .prose-gib p {
     @apply mt-5;
   }
-  .prose-gibb ul {
+  .prose-gib ul {
     @apply mt-5 space-y-2 pl-1;
   }
-  .prose-gibb li {
+  .prose-gib li {
     @apply relative pl-6;
   }
-  .prose-gibb li::before {
+  .prose-gib li::before {
     content: "";
     @apply absolute left-0 top-[0.7em] h-1.5 w-1.5 rounded-full bg-green-olive;
   }
