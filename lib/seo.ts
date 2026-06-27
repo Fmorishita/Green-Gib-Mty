@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { resolveImageSrc } from "@/lib/placeholder";
 
-export const SITE_NAME = "Green Gibb";
+export const SITE_NAME = "Green Gib";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -91,7 +91,7 @@ export function localBusinessJsonLd() {
       addressRegion: "Nuevo León",
       addressCountry: "MX",
     },
-    sameAs: ["https://www.instagram.com/greengibb"],
+    sameAs: ["https://www.instagram.com/greengib"],
   };
 }
 
@@ -144,7 +144,7 @@ export function articleJsonLd(params: {
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/images/brand/logo.png` },
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/images/brand/logo.svg` },
     },
   };
 }

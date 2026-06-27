@@ -30,7 +30,7 @@ export default function ContactoPage({
         eyebrow="Contacto"
         title="Cuéntanos sobre tu proyecto"
         description="Cada gran espacio empieza con una conversación. Completa el formulario o escríbenos por WhatsApp y te respondemos a la brevedad."
-        image="Contacto Green Gibb paisajismo"
+        image="Contacto Green Gib paisajismo"
         size="sm"
       />
 
@@ -107,7 +107,7 @@ export default function ContactoPage({
               <div className="overflow-hidden rounded-2xl border border-stone/40">
                 <Figure
                   src="Mapa de cobertura Monterrey zona metropolitana"
-                  alt="Cobertura de Green Gibb en Monterrey y zona metropolitana"
+                  alt="Cobertura de Green Gib en Monterrey y zona metropolitana"
                   variant="green"
                   className="aspect-[4/3] w-full"
                   sizes="(max-width: 1024px) 100vw, 33vw"

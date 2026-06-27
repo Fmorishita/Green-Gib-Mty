@@ -44,7 +44,7 @@ export default function ServicioDetallePage({ params }: { params: { slug: string
         eyebrow="Servicio"
         title={service.name}
         description={service.description}
-        image={service.gallery[0] ?? "Servicio Green Gibb"}
+        image={service.gallery[0] ?? "Servicio Green Gib"}
         variant="green"
       />
 

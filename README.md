@@ -1,6 +1,6 @@
-# Green Gibb — Paisajismo Premium en Monterrey
+# Green Gib — Paisajismo Premium en Monterrey
 
-Sitio web premium para **Green Gibb**, empresa de paisajismo, diseño de jardines, muros
+Sitio web premium para **Green Gib**, empresa de paisajismo, diseño de jardines, muros
 verdes, decoración exterior y mantenimiento de áreas verdes en Monterrey, Nuevo León.
 
 La web funciona como **vendedor digital**: posiciona la marca, explica los servicios,
@@ -144,7 +144,7 @@ Definido en `tailwind.config.ts`:
 
 ### Imágenes y placeholders
 
-Mientras Green Gibb sube su fotografía real, las imágenes se representan con
+Mientras Green Gib sube su fotografía real, las imágenes se representan con
 **placeholders SVG de marca** generados al vuelo (`lib/placeholder.ts`). Son ligeros,
 sin dependencia de red y sin problemas de derechos.
 

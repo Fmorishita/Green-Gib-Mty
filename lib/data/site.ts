@@ -1,15 +1,15 @@
 /** Configuración global del sitio: navegación, contacto, marca. */
 
 export const siteConfig = {
-  name: "Green Gibb",
+  name: "Green Gib",
   tagline: "Paisajismo premium en Monterrey",
   description:
     "Diseñamos espacios verdes que elevan la forma en que vives, trabajas y convives.",
   city: "Monterrey, Nuevo León",
   serviceArea: "Monterrey y zona metropolitana",
-  email: "hola@greengibb.mx",
-  instagram: "https://www.instagram.com/greengibb",
-  instagramHandle: "@greengibb",
+  email: "hola@greengib.mx",
+  instagram: "https://www.instagram.com/greengib",
+  instagramHandle: "@greengib",
 };
 
 export const mainNav = [

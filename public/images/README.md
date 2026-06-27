@@ -1,6 +1,6 @@
 # Imágenes del sitio
 
-Coloca aquí la fotografía real de Green Gibb. Estructura sugerida:
+Coloca aquí la fotografía real de Green Gib. Estructura sugerida:
 
 ```
 public/images/

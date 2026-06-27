@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Design System — Green Gibb
+ * Design System — Green Gib
  * Paleta natural premium: verdes profundos, arena, piedra, terracota.
  * Tipografía editorial: Fraunces (display) + Inter (texto).
  */

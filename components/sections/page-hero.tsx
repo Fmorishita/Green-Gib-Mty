@@ -17,7 +17,7 @@ export function PageHero({
   eyebrow,
   title,
   description,
-  image = "Texturas naturales Green Gibb",
+  image = "Texturas naturales Green Gib",
   variant = "green",
   align = "left",
   size = "md",

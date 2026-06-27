@@ -11,7 +11,7 @@ import {
 import type { CartItem, Product } from "@/types";
 import { trackEvent } from "@/lib/tracking";
 
-const STORAGE_KEY = "greengibb_cart_v1";
+const STORAGE_KEY = "greengib_cart_v1";
 
 interface CartContextValue {
   items: CartItem[];

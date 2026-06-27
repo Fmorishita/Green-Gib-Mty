@@ -6,39 +6,49 @@ interface LogoProps {
   light?: boolean;
 }
 
-/** Wordmark de Green Gibb con marca de hoja. */
+const LEAF = "#6FB23E"; // verde hoja brillante de la marca
+
+/** Isotipo de Green Gib: skyline (arquitectura) + hojas a dos verdes. */
+export function BrandMark({ light = false, className }: { light?: boolean; className?: string }) {
+  const dark = light ? "#F6F2E9" : "#1E4D2B";
+  const gray = light ? "rgba(246,242,233,0.5)" : "#9AA08F";
+  return (
+    <svg viewBox="0 0 40 44" className={className} fill="none" role="img" aria-hidden>
+      {/* Skyline / arquitectura */}
+      <g fill={gray}>
+        <rect x="12.6" y="8" width="2.4" height="15" rx="1.2" />
+        <rect x="16.9" y="3.5" width="2.6" height="19.5" rx="1.3" />
+        <rect x="21.3" y="11" width="2.4" height="12" rx="1.2" />
+      </g>
+      {/* Hoja oscura (izquierda) */}
+      <path d="M19 41C11 34 11 21 18 12c3 6 3 19 1 29Z" fill={dark} />
+      {/* Hoja brillante (derecha) */}
+      <path d="M19 41c1-11 5-21 11-27 3 10 0 22-11 27Z" fill={LEAF} />
+      {/* Vena */}
+      <path
+        d="M19 41c3-9 7-18 11-25"
+        stroke={light ? "#1E4D2B" : "#F6F2E9"}
+        strokeOpacity="0.45"
+        strokeWidth="0.9"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+/** Logo de marca: isotipo + wordmark "Green Gib" a dos tonos. */
 export function Logo({ className, light = false }: LogoProps) {
   return (
     <Link
       href="/"
-      aria-label="Green Gibb — Inicio"
-      className={cn("group inline-flex items-center gap-2.5", className)}
+      aria-label="Green Gib — Inicio"
+      className={cn("group inline-flex items-center gap-2", className)}
     >
-      <span
-        className={cn(
-          "flex h-9 w-9 items-center justify-center rounded-lg transition-colors",
-          light ? "bg-cream/15 text-cream" : "bg-green-deep text-cream"
-        )}
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path
-            d="M12 21c0-6 3-10 8-12-1 6-3 9-8 12Z"
-            fill="currentColor"
-            opacity="0.9"
-          />
-          <path
-            d="M12 21C7 19 5 13 4 6c6 2 8 7 8 15Z"
-            fill="currentColor"
-          />
-        </svg>
-      </span>
-      <span
-        className={cn(
-          "font-display text-xl font-semibold leading-none tracking-tight",
-          light ? "text-cream" : "text-green-deep"
-        )}
-      >
-        Green Gibb
+      <BrandMark light={light} className="h-9 w-auto" />
+      <span className="font-display text-xl font-semibold leading-none tracking-tight">
+        <span className={light ? "text-cream" : "text-green-deep"}>Green </span>
+        <span style={{ color: LEAF }}>Gib</span>
       </span>
     </Link>
   );

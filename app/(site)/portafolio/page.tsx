@@ -9,7 +9,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Portafolio de proyectos de paisajismo",
   description:
-    "Transformaciones de jardines, terrazas, muros verdes y áreas comerciales en Monterrey. Conoce el trabajo de Green Gibb.",
+    "Transformaciones de jardines, terrazas, muros verdes y áreas comerciales en Monterrey. Conoce el trabajo de Green Gib.",
   path: "/portafolio",
 });
 

@@ -1,5 +1,5 @@
 -- ============================================================
---  GREEN GIBB — Esquema de base de datos (Supabase / PostgreSQL)
+--  GREEN GIB — Esquema de base de datos (Supabase / PostgreSQL)
 --  Ejecuta este archivo en: Supabase Dashboard → SQL Editor.
 -- ============================================================
 

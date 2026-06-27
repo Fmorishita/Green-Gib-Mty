@@ -1,6 +1,6 @@
 import type { Service } from "@/types";
 
-/** 8 servicios principales de Green Gibb. */
+/** 8 servicios principales de Green Gib. */
 export const services: Service[] = [
   {
     slug: "paisajismo-residencial",

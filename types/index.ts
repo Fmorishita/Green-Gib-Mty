@@ -1,5 +1,5 @@
 /**
- * Tipos de dominio de Green Gibb.
+ * Tipos de dominio de Green Gib.
  * Estos tipos reflejan el esquema de Supabase (`supabase/schema.sql`)
  * para que la migración de mock data → base de datos sea trivial.
  */

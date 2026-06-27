@@ -13,7 +13,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Nosotros — Paisajismo con diseño y ejecución",
   description:
-    "Green Gibb es un equipo de paisajismo premium en Monterrey. Diseñamos, ejecutamos y mantenemos espacios verdes con criterio estético y técnico.",
+    "Green Gib es un equipo de paisajismo premium en Monterrey. Diseñamos, ejecutamos y mantenemos espacios verdes con criterio estético y técnico.",
   path: "/nosotros",
 });
 
@@ -46,8 +46,8 @@ export default function NosotrosPage() {
       <PageHero
         eyebrow="Nosotros"
         title="Somos quienes piensan tu espacio antes de plantarlo"
-        description="Green Gibb nace de una idea simple: los espacios exteriores merecen el mismo nivel de diseño y cuidado que el interior de una casa o un negocio."
-        image="Equipo Green Gibb paisajismo"
+        description="Green Gib nace de una idea simple: los espacios exteriores merecen el mismo nivel de diseño y cuidado que el interior de una casa o un negocio."
+        image="Equipo Green Gib paisajismo"
       />
 
       {/* Historia + filosofía */}

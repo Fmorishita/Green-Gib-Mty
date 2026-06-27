@@ -1,5 +1,5 @@
 -- ============================================================
---  GREEN GIBB — Datos semilla (opcional)
+--  GREEN GIB — Datos semilla (opcional)
 --  Ejecuta DESPUÉS de schema.sql.
 --
 --  Nota: las columnas *_image / images / gallery aceptan tanto URLs
@@ -16,7 +16,7 @@ insert into public.testimonials (client_name, project_type, quote, rating, activ
   ('Roberto G.', 'Muro verde · Restaurante',
    'El muro verde se volvió el sello de nuestro restaurante. Los clientes se toman fotos ahí todo el tiempo.', 5, true),
   ('Arq. Daniela M.', 'Aliado de paisajismo',
-   'Como arquitecta valoro trabajar con alguien que entiende diseño, materiales y ejecución. Green Gibb es mi aliado de confianza.', 5, true),
+   'Como arquitecta valoro trabajar con alguien que entiende diseño, materiales y ejecución. Green Gib es mi aliado de confianza.', 5, true),
   ('Grupo Inmobiliario · García', 'Áreas verdes de desarrollo',
    'Cumplieron en tiempo y forma con un proyecto de gran escala. La presentación del acceso cambió por completo.', 5, true)
 on conflict do nothing;

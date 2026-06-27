@@ -19,20 +19,20 @@ const PALETTES: Record<PaletteKey, { from: string; to: string; ink: string }> = 
 
 const ORDER: PaletteKey[] = ["green", "olive", "sand", "terracotta", "stone", "cream"];
 
-const A = "/images/green-gibb";
+const A = "/images/green-gib";
 
 const IMAGE_ASSETS: Record<string, string> = {
   // Global / páginas principales
   "Jardín residencial premium Monterrey": `${A}/hero-home.jpg`,
-  "Servicios de paisajismo Green Gibb": `${A}/corporativo-apodaca-acceso-verde.jpg`,
+  "Servicios de paisajismo Green Gib": `${A}/corporativo-apodaca-acceso-verde.jpg`,
   "Portafolio de paisajismo Monterrey": `${A}/paisajismo-desarrollo-residencial.jpg`,
-  "Tienda de plantas y macetas Green Gibb": `${A}/products-clean.jpg`,
-  "Equipo Green Gibb paisajismo": `${A}/team-working.jpg`,
-  "Contacto Green Gibb paisajismo": `${A}/team-working.jpg`,
-  "Texturas naturales Green Gibb": `${A}/foliage-textures.jpg`,
+  "Tienda de plantas y macetas Green Gib": `${A}/products-clean.jpg`,
+  "Equipo Green Gib paisajismo": `${A}/team-working.jpg`,
+  "Contacto Green Gib paisajismo": `${A}/team-working.jpg`,
+  "Texturas naturales Green Gib": `${A}/foliage-textures.jpg`,
   "Jardín diseñado con intención": `${A}/project-residential.jpg`,
   "Terraza con vegetación natural": `${A}/terraza-estar-vegetacion.jpg`,
-  "Valoración de jardín Green Gibb": `${A}/team-working.jpg`,
+  "Valoración de jardín Green Gib": `${A}/team-working.jpg`,
   "Mapa de cobertura Monterrey zona metropolitana": `${A}/areas-verdes-corporativas.jpg`,
   "Detalle de plantas y materiales": `${A}/foliage-textures.jpg`,
   "Proyecto de paisajismo terminado": `${A}/paisajismo-desarrollo-residencial.jpg`,
@@ -207,7 +207,7 @@ interface PlaceholderOptions {
 
 /** SVG de marca generado al vuelo (fallback para labels sin imagen real). */
 export function placeholderSvg({
-  label = "Green Gibb",
+  label = "Green Gib",
   variant,
   width = 1200,
   height = 900,
@@ -238,7 +238,7 @@ export function placeholderSvg({
     <circle cx="${width * 0.24}" cy="${height * 0.3}" r="${Math.min(width, height) * 0.16}" />
   </g>
   <text x="50%" y="50%" fill="${palette.ink}" fill-opacity="0.95" font-family="Georgia, serif" font-size="${Math.round(width * 0.034)}" text-anchor="middle" dominant-baseline="middle">${escapeXml(label)}</text>
-  <text x="50%" y="${height - height * 0.06}" fill="${palette.ink}" fill-opacity="0.55" font-family="system-ui, sans-serif" font-size="${Math.round(width * 0.016)}" letter-spacing="6" text-anchor="middle">GREEN GIBB · MONTERREY</text>
+  <text x="50%" y="${height - height * 0.06}" fill="${palette.ink}" fill-opacity="0.55" font-family="system-ui, sans-serif" font-size="${Math.round(width * 0.016)}" letter-spacing="6" text-anchor="middle">GREEN GIB · MONTERREY</text>
 </svg>`;
 }
 

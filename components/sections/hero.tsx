@@ -14,7 +14,7 @@ export function Hero() {
       <div className="absolute inset-0">
         <Figure
           src="Jardín residencial premium Monterrey"
-          alt="Jardín residencial premium diseñado por Green Gibb en Monterrey"
+          alt="Jardín residencial premium diseñado por Green Gib en Monterrey"
           variant="green"
           priority
           sizes="100vw"
