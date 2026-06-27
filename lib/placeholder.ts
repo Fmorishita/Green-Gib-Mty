@@ -87,23 +87,26 @@ const IMAGE_ASSETS: Record<string, string> = {
   "Desarrollo García iluminación de acceso": `${A}/desarrollo-garcia-iluminacion-acceso.jpg`,
 
   // Servicios
-  "Jardín residencial San Pedro": `${A}/jardin-san-pedro-fachada.jpg`,
+  // Fase 5 — Servicios principales
+  "Paisajismo residencial servicio": `${A}/paisajismo-residencial-servicio.jpg`,
+  "Jardín residencial San Pedro": `${A}/paisajismo-residencial-servicio.jpg`,
   "Patio interior con vegetación": `${A}/patio-interior-vegetacion-acento.jpg`,
-  "Entrada principal paisajismo": `${A}/jardin-san-pedro-andador.jpg`,
-  "Plano de diseño de jardín": `${A}/project-commercial.jpg`,
-  "Render de paisajismo": `${A}/project-residential.jpg`,
-  "Paleta vegetal Monterrey": `${A}/foliage-textures.jpg`,
+  "Entrada principal paisajismo": `${A}/entrada-principal-paisajismo.jpg`,
+  "Plano de diseño de jardín": `${A}/diseno-jardin-plano.jpg`,
+  "Render de paisajismo": `${A}/render-paisajismo.jpg`,
+  "Paleta vegetal Monterrey": `${A}/paleta-vegetal-monterrey.jpg`,
 
   "Muro verde recepción corporativa": `${A}/green-wall.jpg`,
   "Jardín vertical restaurante": `${A}/green-wall.jpg`,
   "Fachada con muro vivo": `${A}/green-wall.jpg`,
   "Jardín vertical balcón": `${A}/green-wall.jpg`,
   "Patio interior vertical": `${A}/green-wall.jpg`,
-  "Modular verde terraza": `${A}/green-wall.jpg`,
+  "Modular verde terraza": `${A}/modular-verde-terraza.jpg`,
 
-  "Decoración terraza con macetas": `${A}/terraza-restaurante-macetas.jpg`,
-  "Iluminación exterior jardín": `${A}/rooftop-iluminacion-nocturna.jpg`,
-  "Composición de jardineras": `${A}/rooftop-jardineras-perimetrales.jpg`,
+  // Fase 5 — Decoración exterior
+  "Decoración terraza con macetas": `${A}/decoracion-terraza-macetas.jpg`,
+  "Iluminación exterior jardín": `${A}/iluminacion-exterior-jardin.jpg`,
+  "Composición de jardineras": `${A}/composicion-jardineras.jpg`,
 
   "Equipo de mantenimiento de jardines": `${A}/team-working.jpg`,
   "Poda profesional": `${A}/team-working.jpg`,
@@ -116,7 +119,7 @@ const IMAGE_ASSETS: Record<string, string> = {
 
   "Rooftop con jardín y vista": `${A}/rooftop-penthouse-vista-ciudad.jpg`,
   "Terraza de estar con vegetación": `${A}/terraza-estar-vegetacion.jpg`,
-  "Patio convertido en estancia": `${A}/jardin-san-pedro-zona-estar.jpg`,
+  "Patio convertido en estancia": `${A}/patio-convertido-estancia.jpg`,
 
   // Productos
   "Maceta terracota grande": `${A}/products-clean.jpg`,
