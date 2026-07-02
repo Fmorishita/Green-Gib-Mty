@@ -57,10 +57,11 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-full px-3.5 py-2 text-sm font-medium transition-colors",
+                  "relative px-3.5 py-2 text-sm font-medium transition-colors",
+                  "after:absolute after:inset-x-3.5 after:bottom-0 after:h-[2px] after:rounded-full after:bg-terracotta after:transition-transform after:duration-300 after:ease-smooth",
                   active
-                    ? "text-green-deep"
-                    : "text-charcoal-light hover:text-green-deep"
+                    ? "text-green-deep after:scale-x-100"
+                    : "text-charcoal-light after:origin-left after:scale-x-0 hover:text-green-deep hover:after:scale-x-100"
                 )}
               >
                 {item.label}

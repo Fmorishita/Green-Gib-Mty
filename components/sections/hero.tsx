@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, ChevronDown, Play } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { buttonVariants } from "@/components/ui/button";
 import { Figure } from "@/components/ui/figure";
@@ -31,16 +31,18 @@ export function Hero() {
             Paisajismo premium · Monterrey
           </p>
           <h1 className="mt-5 animate-fade-up font-display text-display-xl font-medium text-cream [animation-delay:80ms]">
-            Diseñamos espacios verdes que elevan la forma en que vives, trabajas y convives.
+            Diseñamos espacios verdes que{" "}
+            <em className="italic text-sand">elevan la forma</em> en que vives,
+            trabajas y convives.
           </h1>
           <p className="mt-6 max-w-xl animate-fade-up text-lg leading-relaxed text-cream/85 [animation-delay:160ms]">
             Paisajismo, jardines, muros verdes y decoración exterior para residencias,
             empresas y proyectos arquitectónicos en Monterrey.
           </p>
           <div className="mt-9 flex animate-fade-up flex-col gap-3 sm:flex-row [animation-delay:240ms]">
-            <Link href="/contacto" className={cn(buttonVariants({ variant: "terracotta", size: "lg" }))}>
+            <Link href="/contacto" className={cn(buttonVariants({ variant: "terracotta", size: "lg" }), "group")}>
               Cotizar mi proyecto
-              <ArrowRight className="h-4 w-4" aria-hidden />
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-smooth group-hover:translate-x-1" aria-hidden />
             </Link>
             <Link href="/portafolio" className={cn(buttonVariants({ variant: "outlineLight", size: "lg" }))}>
               <Play className="h-4 w-4" aria-hidden />
@@ -48,20 +50,37 @@ export function Hero() {
             </Link>
           </div>
         </div>
+
+        {/* Indicador de scroll */}
+        <a
+          href="#contenido-home"
+          aria-label="Desplázate para explorar"
+          className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1.5 text-cream/60 transition-colors hover:text-cream md:flex"
+        >
+          <span className="text-[0.65rem] font-medium uppercase tracking-[0.22em]">Explora</span>
+          <ChevronDown className="h-4 w-4 animate-bounce" aria-hidden />
+        </a>
       </Container>
 
-      {/* Barra de confianza */}
+      {/* Marquee de confianza */}
       <div className="relative border-t border-cream/15 bg-green-deep-800/60 backdrop-blur-sm">
-        <Container>
-          <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 py-4 text-center text-sm text-cream/80">
-            {trustPillars.map((pillar, i) => (
-              <li key={pillar} className="flex items-center gap-8">
-                {i > 0 && <span aria-hidden className="hidden h-1 w-1 rounded-full bg-sand sm:block" />}
-                <span>{pillar}</span>
-              </li>
-            ))}
-          </ul>
-        </Container>
+        <div className="overflow-hidden py-4" aria-hidden>
+          <div className="flex w-max animate-marquee items-center gap-10">
+            {[...Array(4)].flatMap((_, r) =>
+              trustPillars.map((pillar, i) => (
+                <span
+                  key={`${r}-${i}`}
+                  className="flex items-center gap-10 whitespace-nowrap text-sm tracking-wide text-cream/80"
+                >
+                  {pillar}
+                  <span className="h-1.5 w-1.5 rounded-full bg-sand/70" />
+                </span>
+              ))
+            )}
+          </div>
+        </div>
+        {/* Versión accesible para lectores de pantalla */}
+        <p className="sr-only">{trustPillars.join(" · ")}</p>
       </div>
     </section>
   );

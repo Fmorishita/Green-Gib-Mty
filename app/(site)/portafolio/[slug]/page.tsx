@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft, MapPin, Tag, Target, Lightbulb } from "lucide-react";
+import { MapPin, Tag, Target, Lightbulb } from "lucide-react";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { PageHero } from "@/components/sections/page-hero";
 import { Container } from "@/components/ui/container";
 import { SectionTitle } from "@/components/sections/section-title";
@@ -53,13 +53,13 @@ export default function ProyectoDetallePage({ params }: { params: { slug: string
 
       <section className="py-section">
         <Container>
-          <Link
-            href="/portafolio"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-green-olive-dark transition-colors hover:text-green-deep"
-          >
-            <ArrowLeft className="h-4 w-4" aria-hidden />
-            Volver al portafolio
-          </Link>
+          <Breadcrumbs
+            items={[
+              { name: "Inicio", path: "/" },
+              { name: "Portafolio", path: "/portafolio" },
+              { name: project.title, path: `/portafolio/${project.slug}` },
+            ]}
+          />
 
           <div className="mt-8 grid gap-12 lg:grid-cols-[1.6fr_1fr]">
             <div className="space-y-10">
