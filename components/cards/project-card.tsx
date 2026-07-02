@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { ArrowUpRight, MapPin } from "lucide-react";
 import type { Project } from "@/types";
 import { Figure } from "@/components/ui/figure";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +28,12 @@ export function ProjectCard({ project, priority }: ProjectCardProps) {
         <div className="absolute left-4 top-4">
           <Badge className="bg-cream/90 text-green-deep backdrop-blur">{project.category}</Badge>
         </div>
+        <span
+          aria-hidden
+          className="absolute bottom-4 right-4 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full bg-cream/90 text-green-deep opacity-0 backdrop-blur transition-all duration-300 ease-smooth group-hover:translate-y-0 group-hover:opacity-100"
+        >
+          <ArrowUpRight className="h-5 w-5" />
+        </span>
       </div>
       <div className="p-6">
         <h3 className="font-display text-xl text-green-deep transition-colors group-hover:text-green-olive-dark">

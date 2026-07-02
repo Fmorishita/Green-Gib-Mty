@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import { Figure } from "@/components/ui/figure";
 import { buttonVariants } from "@/components/ui/button";
 import { WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { MotionSection } from "@/components/sections/motion-section";
@@ -33,13 +34,17 @@ export function CTASection({
     <section className="py-section-sm">
       <Container>
         <MotionSection className="relative overflow-hidden rounded-2xl bg-green-deep px-6 py-14 text-center sm:px-12 sm:py-20">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-green-olive/30 blur-3xl"
+          <Figure
+            src="Jardín San Pedro iluminación nocturna"
+            alt=""
+            variant="green"
+            sizes="100vw"
+            className="absolute inset-0 h-full w-full"
           />
+          <div aria-hidden className="absolute inset-0 bg-green-deep/85" />
           <div
             aria-hidden
-            className="pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-terracotta/20 blur-3xl"
+            className="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-green-olive/25 blur-3xl"
           />
           <div className="relative mx-auto max-w-2xl">
             <p className="mb-3 text-eyebrow font-semibold uppercase text-sand">{eyebrow}</p>

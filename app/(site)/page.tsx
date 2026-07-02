@@ -34,7 +34,7 @@ export default function HomePage() {
       <Hero />
 
       {/* Problema */}
-      <section className="py-section">
+      <section id="contenido-home" className="scroll-mt-20 py-section">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <MotionSection>
@@ -243,7 +243,7 @@ export default function HomePage() {
             eyebrow="Lo que dicen nuestros clientes"
             title="Confianza construida proyecto a proyecto"
           />
-          <MotionStagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <MotionStagger className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2 lg:gap-8">
             {testimonials.map((t) => (
               <MotionItem key={t.id} className="h-full">
                 <TestimonialCard testimonial={t} />

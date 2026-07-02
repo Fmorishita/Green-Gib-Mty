@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft, Check, Truck } from "lucide-react";
+import { Check, Truck } from "lucide-react";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Container } from "@/components/ui/container";
 import { SectionTitle } from "@/components/sections/section-title";
 import { ProductCard } from "@/components/cards/product-card";
@@ -49,13 +49,13 @@ export default function ProductoDetallePage({ params }: { params: { slug: string
 
       <section className="pt-section-sm">
         <Container>
-          <Link
-            href="/tienda"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-green-olive-dark transition-colors hover:text-green-deep"
-          >
-            <ArrowLeft className="h-4 w-4" aria-hidden />
-            Volver a la tienda
-          </Link>
+          <Breadcrumbs
+            items={[
+              { name: "Inicio", path: "/" },
+              { name: "Tienda", path: "/tienda" },
+              { name: product.name, path: `/tienda/${product.slug}` },
+            ]}
+          />
         </Container>
       </section>
 

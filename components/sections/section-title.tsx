@@ -9,7 +9,7 @@ interface SectionTitleProps {
   light?: boolean;
 }
 
-/** Encabezado de sección con eyebrow, título display y descripción. */
+/** Encabezado de sección con eyebrow editorial, título display y descripción. */
 export function SectionTitle({
   eyebrow,
   title,
@@ -18,6 +18,7 @@ export function SectionTitle({
   className,
   light = false,
 }: SectionTitleProps) {
+  const lineClass = cn("h-px w-8", light ? "bg-sand/60" : "bg-green-olive/50");
   return (
     <div
       className={cn(
@@ -29,11 +30,14 @@ export function SectionTitle({
       {eyebrow && (
         <p
           className={cn(
-            "mb-3 text-eyebrow font-semibold uppercase",
+            "mb-3 flex items-center gap-3 text-eyebrow font-semibold uppercase",
+            align === "center" && "justify-center",
             light ? "text-sand" : "text-green-olive"
           )}
         >
+          <span aria-hidden className={lineClass} />
           {eyebrow}
+          {align === "center" && <span aria-hidden className={lineClass} />}
         </p>
       )}
       <h2

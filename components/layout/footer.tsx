@@ -9,8 +9,14 @@ import { whatsappGeneral } from "@/lib/whatsapp";
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-green-deep text-cream">
-      <Container className="py-section-sm">
+    <footer className="relative overflow-hidden bg-green-deep text-cream">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -bottom-[0.18em] left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-[17vw] font-semibold leading-none tracking-tight text-cream/[0.045]"
+      >
+        Green Gib
+      </span>
+      <Container className="relative py-section-sm">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Logo light />

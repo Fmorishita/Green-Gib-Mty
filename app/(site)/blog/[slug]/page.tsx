@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, MessageCircle } from "lucide-react";
+import { ArrowUpRight, MessageCircle } from "lucide-react";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Container } from "@/components/ui/container";
 import { Figure } from "@/components/ui/figure";
 import { Badge } from "@/components/ui/badge";
@@ -56,13 +57,13 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       <article>
         <header className="pt-section-sm">
           <Container size="narrow">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-green-olive-dark transition-colors hover:text-green-deep"
-            >
-              <ArrowLeft className="h-4 w-4" aria-hidden />
-              Volver al blog
-            </Link>
+            <Breadcrumbs
+              items={[
+                { name: "Inicio", path: "/" },
+                { name: "Blog", path: "/blog" },
+                { name: post.title, path: `/blog/${post.slug}` },
+              ]}
+            />
             <div className="mt-6 flex items-center gap-3">
               <Badge variant="olive">{post.category}</Badge>
               <span className="text-sm text-charcoal-muted">{post.readingTime} de lectura</span>
