@@ -123,6 +123,33 @@ export function productJsonLd(params: {
   };
 }
 
+/** JSON-LD: Service. Ayuda a Google a entender qué ofrecemos y dónde. */
+export function serviceJsonLd(params: {
+  name: string;
+  description: string;
+  image: string;
+  slug: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: params.name,
+    description: params.description,
+    image: imageUrl(params.image),
+    url: `${SITE_URL}/servicios/${params.slug}`,
+    serviceType: params.name,
+    provider: { "@id": `${SITE_URL}/#business` },
+    areaServed: {
+      "@type": "City",
+      name: "Monterrey",
+      containedInPlace: {
+        "@type": "State",
+        name: "Nuevo León",
+      },
+    },
+  };
+}
+
 /** JSON-LD: BlogPosting / Article. */
 export function articleJsonLd(params: {
   title: string;

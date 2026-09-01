@@ -20,6 +20,12 @@ export interface LeadActionResult {
  *   el README) y devuelve ok:true para no romper la experiencia del usuario.
  */
 export async function submitLead(input: LeadInput): Promise<LeadActionResult> {
+  // Honeypot: un humano nunca ve este campo. Si viene lleno, es un bot.
+  // Devolvemos ok para no darle señal de que fue detectado.
+  if (input.company && input.company.trim() !== "") {
+    return { ok: true, persisted: false };
+  }
+
   const parsed = leadSchema.safeParse(input);
 
   if (!parsed.success) {

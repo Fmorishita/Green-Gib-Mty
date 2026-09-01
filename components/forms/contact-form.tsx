@@ -5,8 +5,15 @@ import { useRouter } from "next/navigation";
 import { AlertCircle, Loader2, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea, Select, Field } from "@/components/ui/input";
+import { Honeypot } from "@/components/forms/honeypot";
 import { submitLead } from "@/lib/actions/leads";
-import { PROJECT_TYPES, BUDGET_RANGES, TIMELINES, type LeadInput } from "@/lib/validations/lead";
+import {
+  PROJECT_TYPES,
+  BUDGET_RANGES,
+  TIMELINES,
+  HONEYPOT_FIELD,
+  type LeadInput,
+} from "@/lib/validations/lead";
 import { trackEvent } from "@/lib/tracking";
 
 interface ContactFormProps {
@@ -41,6 +48,7 @@ export function ContactForm({ source = "contacto", defaultProjectType }: Contact
       timeline: String(fd.get("timeline") ?? ""),
       message: String(fd.get("message") ?? ""),
       source,
+      company: String(fd.get(HONEYPOT_FIELD) ?? ""),
     };
 
     startTransition(async () => {
@@ -57,7 +65,8 @@ export function ContactForm({ source = "contacto", defaultProjectType }: Contact
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-5">
+    <form onSubmit={handleSubmit} noValidate className="relative space-y-5">
+      <Honeypot />
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Nombre" htmlFor="name" required error={errors.name}>
           <Input id="name" name="name" autoComplete="name" placeholder="Tu nombre" required />

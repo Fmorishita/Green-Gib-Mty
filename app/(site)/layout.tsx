@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
+import { MobileCtaBar } from "@/components/layout/mobile-cta-bar";
 import { CartDrawer } from "@/components/ecommerce/cart-drawer";
 import { SEOJsonLd } from "@/components/sections/seo-json-ld";
 import { localBusinessJsonLd } from "@/lib/seo";
@@ -18,6 +19,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <main id="contenido">{children}</main>
       <Footer />
       <WhatsAppButton />
+      <MobileCtaBar />
       <CartDrawer />
       <SEOJsonLd data={localBusinessJsonLd()} />
     </>

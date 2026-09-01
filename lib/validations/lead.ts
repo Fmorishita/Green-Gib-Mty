@@ -23,9 +23,17 @@ export const leadSchema = z.object({
   timeline: z.string().trim().optional().or(z.literal("")),
   message: z.string().trim().max(1500, "El mensaje es demasiado largo.").optional().or(z.literal("")),
   source: z.string().trim().optional().or(z.literal("")),
+  /**
+   * Honeypot anti-spam. Es un campo oculto para el usuario: si llega con
+   * contenido, el envío viene de un bot que rellena todos los inputs.
+   */
+  company: z.string().optional().or(z.literal("")),
 });
 
 export type LeadInput = z.infer<typeof leadSchema>;
+
+/** Nombre del campo trampa. Debe parecer legítimo para que los bots lo llenen. */
+export const HONEYPOT_FIELD = "company";
 
 export const PROJECT_TYPES = [
   "Paisajismo residencial",

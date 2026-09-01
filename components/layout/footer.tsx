@@ -9,7 +9,8 @@ import { whatsappGeneral } from "@/lib/whatsapp";
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative overflow-hidden bg-green-deep text-cream">
+    // pb-20 en móvil deja espacio para MobileCtaBar, que va fija abajo.
+    <footer className="relative overflow-hidden bg-green-deep pb-20 text-cream md:pb-0">
       <span
         aria-hidden
         className="pointer-events-none absolute -bottom-[0.18em] left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-[17vw] font-semibold leading-none tracking-tight text-cream/[0.045]"

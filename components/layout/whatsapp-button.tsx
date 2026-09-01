@@ -24,7 +24,8 @@ export function WhatsAppButton() {
       onClick={() => trackEvent("WhatsAppClick", { context: "floating-button" })}
       aria-label="Escríbenos por WhatsApp"
       className={cn(
-        "fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-float transition-all duration-300 ease-smooth hover:scale-105 sm:bottom-6 sm:right-6",
+        // En móvil la conversión la cubre MobileCtaBar; aquí solo desde md.
+        "fixed bottom-6 right-6 z-40 hidden h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-float transition-all duration-300 ease-smooth hover:scale-105 md:flex",
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       )}
     >
