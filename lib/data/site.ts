@@ -131,3 +131,64 @@ export const faqs = [
       "Un jardín residencial puede tomar de 1 a 4 semanas según el alcance. En la propuesta siempre incluimos un cronograma estimado.",
   },
 ];
+
+/**
+ * Rangos de inversión orientativos.
+ * Coinciden con los rangos ya publicados en las FAQ y en el formulario de
+ * contacto. Son referencias para orientar, no cotizaciones cerradas.
+ */
+export const investmentTiers = [
+  {
+    name: "Intervención puntual",
+    range: "Desde $15,000 MXN",
+    description:
+      "Renovar un área concreta: jardineras, un rincón de estar, decoración exterior o mejorar la entrada.",
+    includes: [
+      "Diagnóstico del espacio",
+      "Selección de vegetación y materiales",
+      "Instalación y limpieza de obra",
+    ],
+    highlight: false,
+  },
+  {
+    name: "Proyecto integral",
+    range: "$40,000 – $120,000 MXN",
+    description:
+      "El rango más común en residencias: rediseño completo de jardín, terraza o patio, de la idea a la entrega.",
+    includes: [
+      "Diseño y propuesta con alcance claro",
+      "Vegetación, materiales e iluminación",
+      "Riego eficiente y ejecución supervisada",
+      "Acompañamiento post-entrega",
+    ],
+    highlight: true,
+  },
+  {
+    name: "Comercial y desarrollos",
+    range: "Más de $120,000 MXN",
+    description:
+      "Corporativos, hoteles, restaurantes y desarrollos que requieren capacidad operativa y cumplimiento de tiempos.",
+    includes: [
+      "Coordinación con obra y arquitectura",
+      "Muros verdes y áreas de gran escala",
+      "Planes de mantenimiento continuo",
+    ],
+    highlight: false,
+  },
+];
+
+/** Zonas de servicio (SEO local + claridad para el prospecto). */
+export const coverageZones = [
+  "San Pedro Garza García",
+  "Valle Oriente",
+  "Centrito Valle",
+  "Cumbres",
+  "Carretera Nacional",
+  "Santiago",
+  "Apodaca",
+  "Escobedo",
+  "García",
+  "Santa Catarina",
+  "Guadalupe",
+  "Monterrey Centro",
+];

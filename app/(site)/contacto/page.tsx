@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Mail, MapPin, MessageCircle, Instagram, Clock } from "lucide-react";
 import { PageHero } from "@/components/sections/page-hero";
 import { Container } from "@/components/ui/container";
-import { SectionTitle } from "@/components/sections/section-title";
+import { FaqSection } from "@/components/sections/faq-section";
 import { ContactForm } from "@/components/forms/contact-form";
 import { WhatsAppLink } from "@/components/ui/whatsapp-link";
 import { Figure } from "@/components/ui/figure";
-import { siteConfig, faqs } from "@/lib/data/site";
+import { siteConfig } from "@/lib/data/site";
 import { whatsappGeneral } from "@/lib/whatsapp";
 import { pageMetadata } from "@/lib/seo";
 
@@ -121,25 +121,7 @@ export default function ContactoPage({
       {/* FAQ */}
       <section className="bg-cream-dark/50 py-section">
         <Container size="narrow">
-          <SectionTitle align="center" eyebrow="Preguntas frecuentes" title="Resolvemos tus dudas" />
-          <div className="mt-10 space-y-3">
-            {faqs.map((faq) => (
-              <details
-                key={faq.question}
-                className="group rounded-xl border border-stone/40 bg-cream p-5 [&_summary::-webkit-details-marker]:hidden"
-              >
-                <summary className="flex cursor-pointer items-center justify-between gap-4 font-display text-lg text-green-deep">
-                  {faq.question}
-                  <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-green-deep/8 text-green-deep transition-transform group-open:rotate-45">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-                      <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
-                  </span>
-                </summary>
-                <p className="mt-3 leading-relaxed text-charcoal-muted">{faq.answer}</p>
-              </details>
-            ))}
-          </div>
+          <FaqSection standalone={false} title="Resolvemos tus dudas" />
         </Container>
       </section>
     </>

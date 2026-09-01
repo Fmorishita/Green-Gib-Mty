@@ -14,6 +14,9 @@ import { ProductCard } from "@/components/cards/product-card";
 import { TestimonialCard } from "@/components/cards/testimonial-card";
 import { LeadForm } from "@/components/forms/lead-form";
 import { FounderSection } from "@/components/sections/founder-section";
+import { InvestmentSection } from "@/components/sections/investment-section";
+import { CoverageSection } from "@/components/sections/coverage-section";
+import { FaqSection } from "@/components/sections/faq-section";
 import { Figure } from "@/components/ui/figure";
 import { getFeaturedServices } from "@/lib/data/services";
 import { getFeaturedProjects, projects } from "@/lib/data/projects";
@@ -235,8 +238,11 @@ export default function HomePage() {
         </Container>
       </section>
 
+      {/* Inversión */}
+      <InvestmentSection />
+
       {/* Testimonios */}
-      <section className="bg-cream-dark/50 py-section">
+      <section className="py-section">
         <Container>
           <SectionTitle
             align="center"
@@ -252,6 +258,12 @@ export default function HomePage() {
           </MotionStagger>
         </Container>
       </section>
+
+      {/* Zonas de cobertura */}
+      <CoverageSection />
+
+      {/* Preguntas frecuentes */}
+      <FaqSection />
 
       {/* Lead magnet / valoración */}
       <section className="py-section">

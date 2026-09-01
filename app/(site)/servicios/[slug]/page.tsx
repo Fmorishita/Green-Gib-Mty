@@ -9,11 +9,13 @@ import { ServiceCard } from "@/components/cards/service-card";
 import { ImageGallery } from "@/components/sections/image-gallery";
 import { CTASection } from "@/components/sections/cta-section";
 import { WhatsAppLink } from "@/components/ui/whatsapp-link";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { buttonVariants } from "@/components/ui/button";
 import { MotionSection } from "@/components/sections/motion-section";
+import { SEOJsonLd } from "@/components/sections/seo-json-ld";
 import { services, getServiceBySlug } from "@/lib/data/services";
 import { whatsappQuote } from "@/lib/whatsapp";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 export function generateStaticParams() {
@@ -40,6 +42,15 @@ export default function ServicioDetallePage({ params }: { params: { slug: string
 
   return (
     <>
+      <SEOJsonLd
+        data={serviceJsonLd({
+          name: service.name,
+          description: service.shortDescription,
+          image: service.gallery[0] ?? "Servicio Green Gib",
+          slug: service.slug,
+        })}
+      />
+
       <PageHero
         eyebrow="Servicio"
         title={service.name}
@@ -50,6 +61,14 @@ export default function ServicioDetallePage({ params }: { params: { slug: string
 
       <section className="py-section">
         <Container>
+          <Breadcrumbs
+            className="mb-10"
+            items={[
+              { name: "Inicio", path: "/" },
+              { name: "Servicios", path: "/servicios" },
+              { name: service.name, path: `/servicios/${service.slug}` },
+            ]}
+          />
           <div className="grid gap-12 lg:grid-cols-[1.6fr_1fr]">
             <div className="space-y-12">
               {/* Beneficios */}

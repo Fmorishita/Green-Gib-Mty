@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { AlertCircle, Loader2, Sprout } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Select, Field } from "@/components/ui/input";
+import { Honeypot } from "@/components/forms/honeypot";
 import { submitLead } from "@/lib/actions/leads";
-import { PROJECT_TYPES, type LeadInput } from "@/lib/validations/lead";
+import { PROJECT_TYPES, HONEYPOT_FIELD, type LeadInput } from "@/lib/validations/lead";
 import { trackEvent } from "@/lib/tracking";
 
 interface LeadFormProps {
@@ -39,6 +40,7 @@ export function LeadForm({
       phone: String(fd.get("phone") ?? ""),
       project_type: String(fd.get("project_type") ?? ""),
       source,
+      company: String(fd.get(HONEYPOT_FIELD) ?? ""),
     };
 
     startTransition(async () => {
@@ -54,7 +56,8 @@ export function LeadForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-4">
+    <form onSubmit={handleSubmit} noValidate className="relative space-y-4">
+      <Honeypot />
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Nombre" htmlFor="lf-name" required error={errors.name}>
           <Input id="lf-name" name="name" autoComplete="name" placeholder="Tu nombre" required />
