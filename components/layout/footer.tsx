@@ -103,9 +103,12 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-cream/15 pt-6 text-sm text-cream/60 sm:flex-row">
           <p>© {year} Green Gib. Todos los derechos reservados.</p>
-          <p className="flex items-center gap-1.5">
-            Diseñado con intención en Monterrey
-          </p>
+          <div className="flex items-center gap-5">
+            <Link href="/certificados/verificar" className="transition-colors hover:text-cream">
+              Verificar un certificado
+            </Link>
+            <p className="flex items-center gap-1.5">Diseñado con intención en Monterrey</p>
+          </div>
         </div>
       </Container>
     </footer>

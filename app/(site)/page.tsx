@@ -14,6 +14,7 @@ import { ProductCard } from "@/components/cards/product-card";
 import { TestimonialCard } from "@/components/cards/testimonial-card";
 import { LeadForm } from "@/components/forms/lead-form";
 import { FounderSection } from "@/components/sections/founder-section";
+import { CoursesTeaser } from "@/components/sections/courses-teaser";
 import { Figure } from "@/components/ui/figure";
 import { getFeaturedServices } from "@/lib/data/services";
 import { getFeaturedProjects, projects } from "@/lib/data/projects";
@@ -252,6 +253,9 @@ export default function HomePage() {
           </MotionStagger>
         </Container>
       </section>
+
+      {/* Cursos para profesionales */}
+      <CoursesTeaser />
 
       {/* Lead magnet / valoración */}
       <section className="py-section">

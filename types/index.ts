@@ -112,3 +112,63 @@ export interface CartItem {
   image: string;
   quantity: number;
 }
+
+/* ---------------------------------------------------------------------------
+ * Plataforma de cursos
+ * ------------------------------------------------------------------------ */
+
+export interface CourseLesson {
+  slug: string;
+  title: string;
+  durationMinutes: number;
+  /** Lección abierta: se puede ver sin haber comprado el curso. */
+  isPreview?: boolean;
+}
+
+export interface CourseModule {
+  title: string;
+  lessons: CourseLesson[];
+}
+
+export interface Course {
+  slug: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  level: string;
+  price: number;
+  /** Precio tachado, para mostrar descuento. */
+  compareAtPrice?: number;
+  durationMinutes: number;
+  lessonCount: number;
+  cover: string;
+  featured: boolean;
+  published: boolean;
+  outcomes: string[];
+  forWhom: string[];
+  requirements: string[];
+  includes: string[];
+  modules: CourseModule[];
+}
+
+/** Estado de una inscripción. Sólo `active` da acceso al contenido. */
+export type EnrollmentStatus = "pending_payment" | "active" | "expired" | "cancelled";
+
+export interface Enrollment {
+  id: string;
+  user_id: string;
+  course_slug: string;
+  status: EnrollmentStatus;
+  price_paid: number | null;
+  payment_reference: string | null;
+  granted_at: string | null;
+  created_at: string;
+}
+
+export interface LessonProgress {
+  lesson_slug: string;
+  course_slug: string;
+  completed: boolean;
+  completed_at: string | null;
+  last_position_seconds: number;
+}
