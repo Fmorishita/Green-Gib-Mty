@@ -79,13 +79,13 @@ export default function CursosPage() {
           <SectionTitle
             align="center"
             eyebrow="Cómo funciona"
-            title="De la compra al primer video, en minutos"
+            title="Primero pagas, después creas tu cuenta"
           />
           <div className="mx-auto mt-12 grid max-w-4xl gap-8 sm:grid-cols-3">
             {[
-              { n: "01", t: "Creas tu cuenta", d: "Con tu correo y una contraseña. Es la misma cuenta con la que vas a entrar siempre." },
-              { n: "02", t: "Pagas el curso", d: "Al confirmarse el pago, el curso aparece activo en tu panel." },
-              { n: "03", t: "Entras a tu panel", d: "Ves los videos a tu ritmo, marcas tu avance y descargas el material." },
+              { n: "01", t: "Pagas el curso", d: "Sin crear cuenta ni llenar registros. Sólo necesitas tu nombre y un correo." },
+              { n: "02", t: "Creas tu contraseña", d: "Al confirmarse el pago te enviamos el enlace para activar tu cuenta con ese mismo correo." },
+              { n: "03", t: "Entras a tu panel", d: "El curso ya aparece activo. Ves los videos a tu ritmo y descargas el material." },
             ].map((s) => (
               <MotionSection key={s.n}>
                 <p className="font-display text-4xl text-green-olive/40">{s.n}</p>

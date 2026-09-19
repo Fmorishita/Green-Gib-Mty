@@ -10,7 +10,10 @@ import { getMyCourses } from "@/lib/courses/access";
 import { whatsappGeneral } from "@/lib/whatsapp";
 import { pageMetadata } from "@/lib/seo";
 
-/** El checkout refleja el estado de la sesión: nunca se prerenderiza. */
+/**
+ * Dinámica porque detecta si quien mira ya compró el curso. No requiere
+ * sesión: se puede comprar sin cuenta.
+ */
 export const dynamic = "force-dynamic";
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
@@ -25,9 +28,12 @@ export default async function ComprarCursoPage({ params }: { params: { slug: str
   const course = getCourseBySlug(params.slug);
   if (!course) notFound();
 
+  // Sólo para no volver a vender el curso a quien ya lo tiene.
   const user = await getCurrentUser();
   const mine = user ? await getMyCourses() : [];
-  const enrollment = mine.find((e) => e.course.slug === course.slug);
+  const alreadyActive = mine.some(
+    (e) => e.course.slug === course.slug && e.status === "active"
+  );
 
   return (
     <section className="py-section">
@@ -63,9 +69,7 @@ export default async function ComprarCursoPage({ params }: { params: { slug: str
 
         <CheckoutPanel
           course={course}
-          isLoggedIn={Boolean(user)}
-          alreadyActive={enrollment?.status === "active"}
-          alreadyPending={enrollment?.status === "pending_payment"}
+          alreadyActive={alreadyActive}
           whatsappHref={whatsappGeneral()}
         />
       </Container>

@@ -64,32 +64,61 @@ videos viven en una tabla aparte, `lesson_videos`. RLS es por fila y no por
 columna: separar la tabla es lo que permite publicar el temario sin exponer
 las URLs de video.
 
-## Pagos
+## Pagos y alta de cuenta
 
-**No hay pasarela conectada todavía.** El flujo actual:
+**El alumno paga primero y crea su cuenta después.** No se le pide registro
+para comprar: esa fricción tira ventas.
 
-1. El alumno confirma la compra → se crea la inscripción en
-   `status = 'pending_payment'`.
+### Flujo actual (sin pasarela contratada)
+
+1. El visitante llena nombre, correo y teléfono en `/cursos/[slug]/comprar`.
+   Se guarda una fila en `course_orders` con `status = 'pending_payment'`.
+   **No hace falta cuenta.**
 2. Se le muestran las instrucciones para pagar por transferencia y enviar el
    comprobante por WhatsApp.
-3. Dirección cambia el `status` a `'active'` en Supabase al confirmar el pago.
+3. Al confirmar el pago, dirección cambia esa orden a `status = 'paid'`:
 
-La política RLS de `enrollments` sólo permite insertar con
-`status = 'pending_payment'`: **un cliente no puede activarse el acceso solo**,
-ni llamando a la API directamente.
+   ```sql
+   update public.course_orders
+   set status = 'paid', paid_at = now()
+   where id = '<order_id>';
+   ```
+
+4. Se le envía al alumno el enlace de `/acceso/registro` para que cree su
+   contraseña **con el mismo correo de la compra**.
+5. Al entrar a `/mi-cuenta`, la función `claim_paid_orders()` encuentra las
+   órdenes pagadas de ese correo y las convierte en inscripciones activas.
+   Es idempotente: se puede llamar tantas veces como haga falta.
+
+### Por qué el correo debe estar confirmado
+
+El vínculo entre pago y acceso es el correo. `claim_paid_orders()` sólo
+reclama órdenes si `email_confirmed_at` no es nulo, de modo que alguien no
+pueda registrarse con el correo ajeno y quedarse con una compra que no hizo.
+
+**La confirmación de correo debe permanecer activada en Supabase Auth.** Si se
+desactiva, esa protección desaparece.
+
+### Qué no puede hacer un cliente
+
+- Crear una orden ya pagada: la política RLS de `course_orders` sólo permite
+  insertar con `status = 'pending_payment'`.
+- Crear una inscripción activa: la de `enrollments` sólo permite
+  `pending_payment` desde el cliente.
+- Listar órdenes ajenas: sólo se leen las del correo del propio usuario.
 
 ### Cuando se contrate una pasarela
 
 El punto de integración es el paso 3. Un webhook que corra con `service_role`
-(que se salta RLS) actualiza la inscripción:
+(que se salta RLS) marca la orden como pagada:
 
 ```sql
-update public.enrollments
-set status = 'active',
-    granted_at = now(),
+update public.course_orders
+set status = 'paid',
+    paid_at = now(),
     payment_provider = 'stripe',
     payment_reference = '<id del cargo>'
-where id = '<enrollment_id>';
+where id = '<order_id>';
 ```
 
-No hace falta cambiar nada del front: el panel ya reacciona al `status`.
+No hace falta cambiar nada del front: el resto del flujo ya reacciona solo.

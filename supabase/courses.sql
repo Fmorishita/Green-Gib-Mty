@@ -274,3 +274,113 @@ create policy "course_videos_read_enrolled" on storage.objects
 -- La subida de videos NO se hace desde la app: se hace desde el panel de
 -- Supabase o con service_role, que se salta RLS. Por eso aquí no se otorga
 -- ningún permiso de escritura a los usuarios autenticados.
+
+-- ===========================================================================
+--  COMPRA SIN CUENTA PREVIA
+--
+--  El alumno paga primero y crea su cuenta después. La compra se guarda como
+--  una orden anónima ligada a un correo; cuando esa persona se registra con
+--  ese mismo correo, la orden pagada se convierte en inscripción activa.
+-- ===========================================================================
+
+create table if not exists public.course_orders (
+  id                 uuid primary key default gen_random_uuid(),
+  course_id          uuid not null references public.courses (id) on delete restrict,
+  full_name          text not null,
+  email              text not null,
+  phone              text,
+  amount             numeric(10,2) not null default 0,
+  status             text not null default 'pending_payment'
+                     check (status in ('pending_payment','paid','cancelled','refunded')),
+  payment_provider   text,
+  payment_reference  text,
+  paid_at            timestamptz,
+  -- Usuario que ya reclamó esta orden al registrarse. Null = sin reclamar.
+  claimed_by         uuid references auth.users (id) on delete set null,
+  claimed_at         timestamptz,
+  created_at         timestamptz not null default now()
+);
+
+create index if not exists course_orders_email_idx on public.course_orders (lower(email), status);
+create index if not exists course_orders_status_idx on public.course_orders (status, created_at desc);
+
+alter table public.course_orders enable row level security;
+
+-- Cualquiera puede generar una orden, pero sólo como pendiente de pago:
+-- marcarla como pagada corresponde a dirección o al webhook de la pasarela.
+drop policy if exists "orders_public_insert" on public.course_orders;
+create policy "orders_public_insert" on public.course_orders
+  for insert to anon, authenticated
+  with check (status = 'pending_payment' and claimed_by is null);
+
+-- Las órdenes llevan nombre, correo y teléfono: nadie puede listarlas.
+-- Cada usuario ve únicamente las de su propio correo verificado.
+drop policy if exists "orders_own_read" on public.course_orders;
+create policy "orders_own_read" on public.course_orders
+  for select to authenticated
+  using (lower(email) = lower(coalesce(auth.jwt() ->> 'email', '')));
+
+-- ---------------------------------------------------------------------------
+--  Reclamar las órdenes pagadas al iniciar sesión
+--
+--  SECURITY DEFINER para poder crear la inscripción como 'active' (la política
+--  de enrollments sólo deja insertar 'pending_payment' desde el cliente).
+--
+--  IMPORTANTE: exige que el correo esté CONFIRMADO. Sin esa comprobación,
+--  cualquiera podría registrarse con el correo de otra persona y quedarse con
+--  su compra. Por eso la confirmación de correo debe permanecer activada en
+--  Supabase Auth.
+-- ---------------------------------------------------------------------------
+create or replace function public.claim_paid_orders()
+returns integer
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  uid        uuid := auth.uid();
+  user_email text;
+  confirmed  timestamptz;
+  claimed    integer := 0;
+begin
+  if uid is null then
+    return 0;
+  end if;
+
+  select u.email, u.email_confirmed_at
+    into user_email, confirmed
+  from auth.users u
+  where u.id = uid;
+
+  if user_email is null or confirmed is null then
+    return 0;
+  end if;
+
+  with pending as (
+    select o.id, o.course_id
+    from public.course_orders o
+    where lower(o.email) = lower(user_email)
+      and o.status = 'paid'
+      and o.claimed_by is null
+    for update
+  ), granted as (
+    insert into public.enrollments (user_id, course_id, status, price_paid, granted_at)
+    select uid, p.course_id, 'active', null, now()
+    from pending p
+    on conflict (user_id, course_id)
+      do update set status = 'active', granted_at = coalesce(public.enrollments.granted_at, now())
+    returning course_id
+  )
+  update public.course_orders o
+     set claimed_by = uid,
+         claimed_at = now()
+    from pending p
+   where o.id = p.id;
+
+  get diagnostics claimed = row_count;
+  return claimed;
+end;
+$$;
+
+revoke all on function public.claim_paid_orders() from public;
+grant execute on function public.claim_paid_orders() to authenticated;

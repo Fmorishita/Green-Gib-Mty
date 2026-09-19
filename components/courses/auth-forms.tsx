@@ -65,7 +65,7 @@ export function SignInForm({ redirectTo }: { redirectTo?: string }) {
           Entra a tus cursos
         </h1>
         <p className="mt-2 text-charcoal-muted">
-          Usa el correo con el que compraste.
+          Con el mismo correo que usaste al comprar.
         </p>
       </div>
 
@@ -98,12 +98,12 @@ export function SignInForm({ redirectTo }: { redirectTo?: string }) {
       </Button>
 
       <p className="text-center text-sm text-charcoal-muted">
-        ¿Todavía no tienes cuenta?{" "}
+        ¿Ya compraste y aún no activas tu cuenta?{" "}
         <Link
           href={redirectTo ? `/acceso/registro?redirect=${encodeURIComponent(redirectTo)}` : "/acceso/registro"}
           className="font-medium text-green-deep underline underline-offset-4"
         >
-          Créala aquí
+          Actívala aquí
         </Link>
       </p>
     </form>
@@ -164,10 +164,11 @@ export function SignUpForm({ redirectTo }: { redirectTo?: string }) {
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
       <div>
         <h1 className="font-display text-display-sm font-medium text-green-deep">
-          Crea tu cuenta
+          Activa tu cuenta
         </h1>
         <p className="mt-2 text-charcoal-muted">
-          Con esta cuenta entras a todos los cursos que compres.
+          Usa <strong className="text-charcoal">el mismo correo con el que compraste</strong>. Es
+          lo que conecta tu pago con tu acceso.
         </p>
       </div>
 
