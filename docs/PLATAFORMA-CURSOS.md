@@ -157,6 +157,38 @@ descarga en su panel (tanto en `/mi-cuenta` como en `/mi-cuenta/[curso]`).
   exactamente — no hay política pública que permita listar todos los
   certificados.
 
+### Certificado de ejemplo (público)
+
+`/api/certificado-ejemplo` devuelve un certificado de muestra, sin sesión. Se
+usa en dos lugares: el botón "Ver certificado de ejemplo" de `/cursos` (para
+que el interesado vea qué recibe antes de comprar) y la tarjeta del panel en
+`/cursos/vista-previa`, que en modo maqueta abre este PDF en lugar de llamar a
+la Server Action de emisión.
+
+Se genera con el **mismo** código que el certificado real, así que no puede
+desincronizarse del diseño que se entrega. No es válido y no lo aparenta: el
+nombre es un marcador y el folio `GG-EJEMPLO` no existe en la base, de modo
+que quien lo intente verificar recibe "no encontramos ese folio".
+
+Dos decisiones que conviene no revertir sin querer:
+
+- **Vive fuera de `/api/certificados/`.** Como hermana de `[codigo]/pdf`, el
+  segmento dinámico la capturaba y respondía 401 aunque el build la listara
+  como ruta propia.
+- **Es `force-static`.** Generar el PDF cuesta ~77 ms de CPU; hacerlo por
+  petición en un endpoint público sin autenticación es justo lo que no
+  conviene dejar abierto. El precio es que la fecha de la muestra es la del
+  despliegue, cosa que en un ejemplo da igual.
+
+### Firma del certificado
+
+El pie lleva el nombre del fundador impreso sobre la línea, no una firma
+dibujada: inventar la rúbrica de una persona real en un documento que
+certifica algo no es aceptable. Si dirección quiere que aparezca la firma
+real, basta con colocar un PNG de fondo transparente en
+`lib/certificates/assets/firma.png`; `drawSignatureImage()` la incrusta sola y,
+si el archivo no está, el certificado se genera igual sin ella.
+
 ### Poner en marcha
 
 Ejecutar `supabase/certificates.sql` en el SQL Editor, después de

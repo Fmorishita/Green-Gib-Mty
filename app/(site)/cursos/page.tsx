@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { GraduationCap, Infinity as InfinityIcon, FileDown, Award, ArrowRight } from "lucide-react";
+import {
+  GraduationCap,
+  Infinity as InfinityIcon,
+  FileDown,
+  Award,
+  ArrowRight,
+  ShieldCheck,
+} from "lucide-react";
 import { PageHero } from "@/components/sections/page-hero";
 import { Container } from "@/components/ui/container";
 import { SectionTitle } from "@/components/sections/section-title";
@@ -104,6 +111,43 @@ export default function CursosPage() {
               </Link>
               <Link href="/cursos/vista-previa" className={cn(buttonVariants({ variant: "secondary" }))}>
                 Ver cómo es el panel
+              </Link>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Certificado */}
+      <section className="bg-cream-dark/50 py-section">
+        <Container>
+          <div className="mx-auto max-w-3xl rounded-2xl border border-sand bg-sand-light/40 p-8 text-center sm:p-12">
+            <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-deep/10">
+              <Award className="h-6 w-6 text-green-deep" aria-hidden />
+            </span>
+            <h2 className="mt-5 font-display text-display-sm font-medium text-green-deep">
+              Terminas el curso y te certificamos
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl leading-relaxed text-charcoal-muted">
+              Al completar el 100% de las lecciones descargas tu certificado en PDF, con tu
+              nombre y un folio único. Cualquiera puede comprobar que es auténtico desde esta
+              misma web, así que sirve para respaldar tu trabajo frente a un cliente.
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
+              <a
+                href="/api/certificado-ejemplo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(buttonVariants({ variant: "primary" }))}
+              >
+                <FileDown className="h-4 w-4" aria-hidden />
+                Ver certificado de ejemplo
+              </a>
+              <Link
+                href="/certificados/verificar"
+                className={cn(buttonVariants({ variant: "secondary" }))}
+              >
+                <ShieldCheck className="h-4 w-4" aria-hidden />
+                Verificar un folio
               </Link>
             </div>
           </div>

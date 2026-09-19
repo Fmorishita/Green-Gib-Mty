@@ -54,7 +54,7 @@ export default function VistaPreviaPage() {
 
       {/* Panel */}
       <div className="bg-cream-dark/30">
-        <PanelDashboard courses={demoCourses} userName="Roberto Guzmán" />
+        <PanelDashboard courses={demoCourses} userName="Roberto Guzmán" demo />
       </div>
 
       {/* Reproductor */}

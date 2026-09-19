@@ -22,6 +22,7 @@ const nextConfig = {
     // la incluya en el bundle de la función serverless.
     outputFileTracingIncludes: {
       "/api/certificados/**": ["./lib/certificates/fonts/**"],
+      "/api/certificado-ejemplo": ["./lib/certificates/fonts/**"],
     },
   },
 };

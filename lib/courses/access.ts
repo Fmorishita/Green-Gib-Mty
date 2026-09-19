@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/auth/session";
-import { getCourseBySlug, courses } from "@/lib/data/courses";
+import { getCourseBySlug, courses, getCourseLessons } from "@/lib/data/courses";
 import type { Course } from "@/types";
 
 export interface EnrolledCourse {
@@ -112,6 +112,7 @@ export async function getLessonVideoUrl(
 export function getPreviewPanelData(): EnrolledCourse[] {
   const muros = courses.find((c) => c.slug === "instalacion-de-muros-verdes");
   const riego = courses.find((c) => c.slug === "sistemas-de-riego-eficiente");
+  const terminado = courses.find((c) => c.slug === "mantenimiento-profesional-areas-verdes");
   const data: EnrolledCourse[] = [];
   if (muros) {
     data.push({
@@ -134,6 +135,16 @@ export function getPreviewPanelData(): EnrolledCourse[] {
       status: "active",
       completedLessons: ["bienvenida", "por-que-falla-el-riego"],
       progressPercent: 14,
+    });
+  }
+  if (terminado) {
+    // Un curso al 100% para que la maqueta muestre también el estado final:
+    // insignia de completado y acceso al certificado.
+    data.push({
+      course: terminado,
+      status: "active",
+      completedLessons: getCourseLessons(terminado).map((l) => l.slug),
+      progressPercent: 100,
     });
   }
   return data;

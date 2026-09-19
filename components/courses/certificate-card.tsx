@@ -12,6 +12,11 @@ interface CertificateCardProps {
   courseTitle: string;
   /** Compacta: la versión que va en la lista de /mi-cuenta. */
   compact?: boolean;
+  /**
+   * Maqueta: en /cursos/vista-previa no hay sesión, así que en lugar de emitir
+   * un certificado se abre el de ejemplo. Nunca llama a la Server Action.
+   */
+  demo?: boolean;
 }
 
 /**
@@ -22,12 +27,21 @@ interface CertificateCardProps {
  * verificación de "¿de verdad terminó el curso?" ya ocurrió en el servidor
  * dentro de `issue_certificate_if_completed`.
  */
-export function CertificateCard({ courseSlug, courseTitle, compact = false }: CertificateCardProps) {
+export function CertificateCard({
+  courseSlug,
+  courseTitle,
+  compact = false,
+  demo = false,
+}: CertificateCardProps) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [code, setCode] = useState<string | null>(null);
 
   const handleDownload = () => {
+    if (demo) {
+      window.open("/api/certificado-ejemplo", "_blank");
+      return;
+    }
     setError(null);
     startTransition(async () => {
       const result = await issueCertificate(courseSlug);

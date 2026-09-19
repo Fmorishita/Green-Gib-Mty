@@ -14,9 +14,12 @@ import type { EnrolledCourse } from "@/lib/courses/access";
 export function PanelDashboard({
   courses,
   userName,
+  demo = false,
 }: {
   courses: EnrolledCourse[];
   userName: string | null;
+  /** Maqueta pública: el certificado abre el de ejemplo, no emite uno real. */
+  demo?: boolean;
 }) {
   const active = courses.filter((c) => c.status === "active");
   const pending = courses.filter((c) => c.status === "pending_payment");
@@ -125,7 +128,12 @@ export function PanelDashboard({
                         {completedLessons.length === 0 ? "Empezar curso" : isDone ? "Repasar" : "Continuar"}
                       </Link>
                       {isDone && (
-                        <CertificateCard courseSlug={course.slug} courseTitle={course.title} compact />
+                        <CertificateCard
+                          courseSlug={course.slug}
+                          courseTitle={course.title}
+                          compact
+                          demo={demo}
+                        />
                       )}
                     </div>
                   </div>
