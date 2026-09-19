@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/container";
 import { Figure } from "@/components/ui/figure";
 import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/courses/progress-bar";
+import { CertificateCard } from "@/components/courses/certificate-card";
 import { buttonVariants } from "@/components/ui/button";
 import { formatDuration, getCourseLessons } from "@/lib/data/courses";
 import { cn } from "@/lib/utils";
@@ -111,17 +112,22 @@ export function PanelDashboard({
                         </span>
                       </p>
                     )}
-                    <Link
-                      href={
-                        nextLesson
-                          ? `/mi-cuenta/${course.slug}/${nextLesson.slug}`
-                          : `/mi-cuenta/${course.slug}`
-                      }
-                      className={cn(buttonVariants({ variant: "primary", size: "sm" }))}
-                    >
-                      <PlayCircle className="h-4 w-4" aria-hidden />
-                      {completedLessons.length === 0 ? "Empezar curso" : isDone ? "Repasar" : "Continuar"}
-                    </Link>
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      <Link
+                        href={
+                          nextLesson
+                            ? `/mi-cuenta/${course.slug}/${nextLesson.slug}`
+                            : `/mi-cuenta/${course.slug}`
+                        }
+                        className={cn(buttonVariants({ variant: "primary", size: "sm" }))}
+                      >
+                        <PlayCircle className="h-4 w-4" aria-hidden />
+                        {completedLessons.length === 0 ? "Empezar curso" : isDone ? "Repasar" : "Continuar"}
+                      </Link>
+                      {isDone && (
+                        <CertificateCard courseSlug={course.slug} courseTitle={course.title} compact />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

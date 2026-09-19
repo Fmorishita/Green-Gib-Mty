@@ -122,3 +122,42 @@ where id = '<order_id>';
 ```
 
 No hace falta cambiar nada del front: el resto del flujo ya reacciona solo.
+
+## Certificados de finalización
+
+Al completar el 100% de las lecciones de un curso, el alumno ve una tarjeta de
+descarga en su panel (tanto en `/mi-cuenta` como en `/mi-cuenta/[curso]`).
+
+### Cómo se genera
+
+- El PDF se dibuja con `pdf-lib` (vectorial) en `lib/certificates/pdf.ts` — no
+  usa un navegador headless, así que no depende de empaquetar Chromium en la
+  función serverless de Vercel.
+- Las fuentes (Instrument Serif + Manrope) están incrustadas como archivos
+  `.ttf` en `lib/certificates/fonts/`. Se les quitó la tabla `GSUB` a
+  propósito: la ligadura "fi" del Google Fonts original se corrompe al
+  incrustarse con `pdf-lib`/`fontkit` y deja un hueco en blanco en el texto
+  ("Certifi cado" en vez de "Certificado"). Sin GSUB, "fi"/"fl" se
+  dibujan como letras sueltas — ya verificado visualmente que se ven
+  correctas.
+- `next.config.mjs` declara `outputFileTracingIncludes` para el endpoint de
+  descarga, para que Vercel empaquete esos `.ttf` en la función. Verificado
+  en el build: aparecen en `route.js.nft.json`.
+
+### Autenticidad
+
+- Cada certificado tiene un folio (`GG-2026-XXXXXX`) generado por la función
+  de Postgres `issue_certificate_if_completed`, que primero comprueba que el
+  alumno de verdad completó el 100% de las lecciones — el cliente no puede
+  fabricarse un certificado llamando a la Server Action con datos falsos.
+- La emisión es idempotente: volver a "descargar" no crea un folio nuevo.
+- Cualquiera puede verificar un folio en `/certificados/verificar` (enlazado
+  desde el pie de página del sitio). La consulta pasa por la función
+  `verify_certificate`, que sólo devuelve una fila si el folio coincide
+  exactamente — no hay política pública que permita listar todos los
+  certificados.
+
+### Poner en marcha
+
+Ejecutar `supabase/certificates.sql` en el SQL Editor, después de
+`courses.sql`.

@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/container";
 import { Figure } from "@/components/ui/figure";
 import { Curriculum } from "@/components/courses/curriculum";
 import { ProgressBar } from "@/components/courses/progress-bar";
+import { CertificateCard } from "@/components/courses/certificate-card";
 import { buttonVariants } from "@/components/ui/button";
 import { getCourseBySlug, formatDuration, getCourseLessons } from "@/lib/data/courses";
 import { getEnrolledCourse, getMyCourses } from "@/lib/courses/access";
@@ -32,6 +33,7 @@ export default async function CursoPanelPage({ params }: { params: { curso: stri
 
   const flat = getCourseLessons(course);
   const nextLesson = flat.find((l) => !enrolled.completedLessons.includes(l.slug)) ?? flat[0];
+  const isComplete = enrolled.progressPercent >= 100;
 
   return (
     <Container className="py-10">
@@ -80,7 +82,7 @@ export default async function CursoPanelPage({ params }: { params: { curso: stri
                 </li>
               </ul>
 
-              {nextLesson && (
+              {!isComplete && nextLesson && (
                 <Link
                   href={`/mi-cuenta/${course.slug}/${nextLesson.slug}`}
                   className={cn(buttonVariants({ variant: "primary" }), "mt-6 w-full")}
@@ -91,6 +93,12 @@ export default async function CursoPanelPage({ params }: { params: { curso: stri
               )}
             </div>
           </div>
+
+          {isComplete && (
+            <div className="mt-4">
+              <CertificateCard courseSlug={course.slug} courseTitle={course.title} />
+            </div>
+          )}
         </aside>
 
         {/* Temario */}

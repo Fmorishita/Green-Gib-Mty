@@ -50,7 +50,7 @@ export const courses: Course[] = [
       "Plantilla de cálculo de carga y materiales",
       "Lista de proveedores y especificaciones técnicas",
       "Protocolo de mantenimiento descargable",
-      "Constancia de finalización",
+      "Certificado de finalización verificable en línea",
     ],
     modules: [
       {
@@ -142,7 +142,7 @@ export const courses: Course[] = [
       "14 lecciones en video con acceso permanente",
       "Hoja de cálculo de presión y caudal",
       "Checklist de puesta en marcha",
-      "Constancia de finalización",
+      "Certificado de finalización verificable en línea",
     ],
     modules: [
       {
@@ -214,7 +214,7 @@ export const courses: Course[] = [
       "19 lecciones en video con acceso permanente",
       "Formato de levantamiento en campo",
       "Plantilla de propuesta y presupuesto",
-      "Constancia de finalización",
+      "Certificado de finalización verificable en línea",
     ],
     modules: [
       {
@@ -288,7 +288,7 @@ export const courses: Course[] = [
       "12 lecciones en video con acceso permanente",
       "Calendario de mantenimiento por temporada",
       "Formato de reporte de visita",
-      "Constancia de finalización",
+      "Certificado de finalización verificable en línea",
     ],
     modules: [
       {

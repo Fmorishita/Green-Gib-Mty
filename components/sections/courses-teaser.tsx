@@ -39,7 +39,7 @@ export function CoursesTeaser() {
               {[
                 "Acceso permanente, con las actualizaciones incluidas",
                 "Plantillas de cálculo y listas de materiales descargables",
-                "Constancia de finalización para mostrar a tus clientes",
+                "Certificado de finalización para mostrar a tus clientes",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-cream/85">
                   <GraduationCap className="mt-0.5 h-5 w-5 flex-shrink-0 text-sand" aria-hidden />

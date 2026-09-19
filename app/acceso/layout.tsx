@@ -48,7 +48,7 @@ export default function AccesoLayout({ children }: { children: React.ReactNode }
             El método con el que instalamos nuestros propios proyectos, explicado paso a paso.
           </p>
           <p className="mt-4 text-sm text-cream/70">
-            Acceso permanente · Material descargable · Constancia de finalización
+            Acceso permanente · Material descargable · Certificado verificable
           </p>
         </div>
       </div>

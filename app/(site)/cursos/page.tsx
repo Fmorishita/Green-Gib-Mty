@@ -23,7 +23,7 @@ const benefits = [
   { icon: InfinityIcon, title: "Acceso permanente", text: "Compras una vez y el curso queda en tu cuenta para siempre, con las actualizaciones incluidas." },
   { icon: FileDown, title: "Material descargable", text: "Plantillas de cálculo, listas de materiales y protocolos que usamos en obra." },
   { icon: GraduationCap, title: "Método probado", text: "El mismo procedimiento con el que instalamos nuestros propios proyectos." },
-  { icon: Award, title: "Constancia", text: "Al terminar recibes una constancia que puedes mostrar a tus clientes." },
+  { icon: Award, title: "Certificado", text: "Al terminar recibes un certificado verificable que puedes mostrar a tus clientes." },
 ];
 
 export default function CursosPage() {
