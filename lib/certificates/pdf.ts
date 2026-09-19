@@ -1,56 +1,63 @@
 import fs from "node:fs";
 import path from "node:path";
-import { PDFDocument, rgb, degrees, type PDFFont, type PDFPage } from "pdf-lib";
+import { PDFDocument, rgb, degrees, type PDFFont, type PDFPage, type RGB } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 
 /**
  * Generador del certificado de finalización.
  *
- * Usa pdf-lib (vectorial, sin navegador headless) en lugar de renderizar
- * HTML con Chromium: esta función corre dentro de una Server Action /
- * Route Handler en el runtime de Node de Vercel, y pdf-lib no depende de un
- * binario de Chromium que haya que empaquetar aparte.
+ * Usa pdf-lib (vectorial, sin navegador headless) porque esta función corre
+ * en el runtime de Node de Vercel y pdf-lib no depende de un binario de
+ * Chromium que haya que empaquetar aparte.
  *
- * Diseño v2: paisaje tamaño carta, verde profundo + arena + un acento bronce
- * para las líneas finas. Referencias de "documento oficial" ejecutadas con
- * el propio lenguaje de marca, en vez de clichés de plantilla:
- *   - Marco con marcas grabadas (como el canto de una moneda), no un
- *     rectángulo plano.
- *   - Esquinas con escuadra fina + rama de hojas, no un sello dorado pegado.
- *   - Medallón con cintas en vez de un círculo con texto suelto.
- *   - Marca de agua tenue del wordmark detrás del contenido — el mismo
- *     recurso que ya usa el footer del sitio (components/layout/footer.tsx),
- *     para que el documento se sienta de la misma familia.
- *   - Tracking manual en las etiquetas en mayúsculas: sin eso, un caption en
- *     mayúsculas apretado se lee "genérico"; con tracking se lee "grabado".
+ * Diseño v3 — estilo diploma clásico, siguiendo la referencia aprobada:
+ *   · Marco ancho verde con patrón guilloché (las ondas entrelazadas de los
+ *     billetes y títulos oficiales), entre filetes dorados.
+ *   · Guirnaldas de laurel doradas con moño en las cuatro esquinas.
+ *   · Sello de cera dorado con monograma, montado sobre el marco superior.
+ *   · Roseta dorada con cintas verdes como ancla del centro.
+ *   · Marca de agua del wordmark, como papel de seguridad.
  *
- * Tipografía: Instrument Serif para el nombre y el título, Manrope para el
- * resto — la misma pareja usada en el manual de ventas y en la presentación
- * de capacitación.
+ * Todo es vectorial y generado por código: no hay imágenes rasterizadas, así
+ * que el certificado se imprime nítido a cualquier tamaño.
  */
 
 // ---------------------------------------------------------------------------
-// Paleta (tomada de los tokens de marca: tailwind.config.ts, + un acento
-// bronce nuevo, exclusivo de este documento, para las líneas finas del marco
-// y el medallón — evita el dorado brillante de plantilla).
+// Paleta
 // ---------------------------------------------------------------------------
+const GOLD = rgb(0xb8 / 255, 0x91 / 255, 0x2f / 255);
+const GOLD_LIGHT = rgb(0xdf / 255, 0xc2 / 255, 0x75 / 255);
+const GOLD_PALE = rgb(0xf0 / 255, 0xe0 / 255, 0xb4 / 255);
+const GOLD_DARK = rgb(0x7d / 255, 0x5f / 255, 0x1c / 255);
+
+const GREEN_BAND = rgb(0x1e / 255, 0x47 / 255, 0x36 / 255);
+const GREEN_GUILLOCHE = rgb(0x4a / 255, 0x7a / 255, 0x63 / 255);
 const GREEN_DEEP = rgb(0x14 / 255, 0x34 / 255, 0x2b / 255);
-const GREEN_LINE = rgb(0x2a / 255, 0x52 / 255, 0x44 / 255);
-const OLIVE = rgb(0x6b / 255, 0x7a / 255, 0x4f / 255);
-const SAND = rgb(0xdb / 255, 0xc9 / 255, 0xa6 / 255);
-const CREAM = rgb(0xf6 / 255, 0xf2 / 255, 0xe9 / 255);
-const INK = rgb(0x10 / 255, 0x1a / 255, 0x16 / 255);
+
+const CREAM = rgb(0xfb / 255, 0xf8 / 255, 0xf1 / 255);
+const INK = rgb(0x1a / 255, 0x23 / 255, 0x1e / 255);
 const INK_SOFT = rgb(0x4c / 255, 0x57 / 255, 0x4f / 255);
 const INK_FAINT = rgb(0x7c / 255, 0x87 / 255, 0x80 / 255);
-const BRONZE = rgb(0x8a / 255, 0x6a / 255, 0x2e / 255);
 
 const FONTS_DIR = path.join(process.cwd(), "lib", "certificates", "fonts");
-const PAGE_W = 792; // 11in landscape
+const ASSETS_DIR = path.join(process.cwd(), "lib", "certificates", "assets");
+const PAGE_W = 792; // 11in horizontal
 const PAGE_H = 612; // 8.5in
+
+// Geometría del marco
+const RULE_OUT = 22; // filete dorado exterior
+const BAND_OUT = 28; // borde exterior de la banda verde
+const BAND_IN = 56; // borde interior de la banda verde
+const RULE_IN = 66; // filete dorado interior
+const BAND_MID = (BAND_OUT + BAND_IN) / 2;
 
 function loadFont(file: string): Buffer {
   return fs.readFileSync(path.join(FONTS_DIR, file));
 }
+
+// ---------------------------------------------------------------------------
+// Utilidades de texto
+// ---------------------------------------------------------------------------
 
 /** Centra una línea de texto horizontalmente en la página. */
 function drawCentered(
@@ -59,17 +66,16 @@ function drawCentered(
   y: number,
   font: PDFFont,
   size: number,
-  color = INK
+  color: RGB = INK
 ) {
   const width = font.widthOfTextAtSize(text, size);
   page.drawText(text, { x: (PAGE_W - width) / 2, y, size, font, color });
 }
 
 /**
- * Texto en mayúsculas con espaciado entre letras (tracking), centrado.
- * pdf-lib no soporta letter-spacing nativo, así que se dibuja letra por
- * letra. Es lo que separa un caption "genérico" de uno que se lee grabado:
- * úsalo sólo en etiquetas cortas en mayúsculas, nunca en párrafos.
+ * Texto con espaciado entre letras (tracking), dibujado letra por letra
+ * porque pdf-lib no soporta letter-spacing nativo. Es lo que separa un
+ * caption en mayúsculas apretado de uno que se lee grabado.
  */
 function drawTracked(
   page: PDFPage,
@@ -77,210 +83,403 @@ function drawTracked(
   y: number,
   font: PDFFont,
   size: number,
-  color: ReturnType<typeof rgb>,
-  tracking: number
+  color: RGB,
+  tracking: number,
+  opts?: { x?: number; width?: number }
 ) {
   const chars = [...text];
   const widths = chars.map((c) => font.widthOfTextAtSize(c, size));
   const total = widths.reduce((s, w) => s + w, 0) + tracking * (chars.length - 1);
-  let x = (PAGE_W - total) / 2;
+  const boxX = opts?.x ?? 0;
+  const boxW = opts?.width ?? PAGE_W;
+  let x = boxX + (boxW - total) / 2;
   chars.forEach((c, i) => {
     page.drawText(c, { x, y, size, font, color });
     x += widths[i] + tracking;
   });
 }
 
-// Silueta de una hoja individual: un óvalo puntiagudo (forma de almendra)
-// apuntando en +x desde el origen, con su vena central. Coordenadas propias
-// de un sistema local de 24×10 unidades que luego se escala y rota.
-const LEAF_BLADE_PATH = "M0,0 C6,5 16,4.5 24,0 C16,-4.5 6,-5 0,0 Z";
-const LEAF_VEIN_PATH = "M2,0 L22,0";
+/** Igual que drawTracked pero anclado a la izquierda. */
+function drawTrackedLeft(
+  page: PDFPage,
+  text: string,
+  x: number,
+  y: number,
+  font: PDFFont,
+  size: number,
+  color: RGB,
+  tracking: number
+) {
+  let cursor = x;
+  for (const c of text) {
+    page.drawText(c, { x: cursor, y, size, font, color });
+    cursor += font.widthOfTextAtSize(c, size) + tracking;
+  }
+}
 
-/** Rama con hojas reales: un tallo curvo y hojas puntiagudas a lo largo,
- * motivo botánico coherente con el rubro de Green Gib. */
-function drawLeafSprig(page: PDFPage, x: number, y: number, scale: number, mirror: boolean) {
-  const sx = mirror ? -1 : 1;
+// ---------------------------------------------------------------------------
+// Utilidades vectoriales
+//
+// drawSvgPath interpreta el path en coordenadas SVG (eje Y hacia abajo) y lo
+// ancla en el punto (x, y) que se le pase. Anclando en (0, PAGE_H) y
+// escribiendo cada punto como (px, PAGE_H - py), el path queda en las
+// coordenadas normales del PDF.
+// ---------------------------------------------------------------------------
+interface Pt {
+  x: number;
+  y: number;
+}
 
-  const stemEnd = { x: x + sx * 40 * scale, y: y + 9 * scale };
-  const stemMid = { x: x + sx * 20 * scale, y: y + 3 * scale };
-  page.drawLine({ start: { x, y }, end: stemMid, thickness: 1, color: OLIVE, opacity: 0.5 });
-  page.drawLine({ start: stemMid, end: stemEnd, thickness: 1, color: OLIVE, opacity: 0.5 });
+function polyline(points: Pt[]): string {
+  return points
+    .map((p, i) => `${i === 0 ? "M" : "L"}${p.x.toFixed(2)},${(PAGE_H - p.y).toFixed(2)}`)
+    .join(" ");
+}
 
-  const leaves: Array<{ along: number; size: number; rot: number }> = [
-    { along: 8, size: 0.55, rot: 44 },
-    { along: 18, size: 0.62, rot: 26 },
-    { along: 30, size: 0.52, rot: 12 },
-  ];
+function drawPolyline(
+  page: PDFPage,
+  points: Pt[],
+  color: RGB,
+  thickness: number,
+  opacity = 1
+) {
+  page.drawSvgPath(polyline(points), {
+    x: 0,
+    y: PAGE_H,
+    borderColor: color,
+    borderWidth: thickness,
+    borderOpacity: opacity,
+  });
+}
 
-  for (const leaf of leaves) {
-    const t = leaf.along / 40;
-    const px = x + sx * leaf.along * scale;
-    const py = y + (3 + t * 6) * scale;
-    // El espejo se resuelve por rotación pura (no por escala negativa, que
-    // degenera la silueta).
-    const angle = mirror ? 180 - leaf.rot : leaf.rot;
-    const opts = {
-      x: px,
-      y: py,
-      scale: scale * leaf.size,
-      rotate: degrees(angle),
-      color: OLIVE,
-      opacity: 0.45,
-    };
-    page.drawSvgPath(LEAF_BLADE_PATH, opts);
-    page.drawSvgPath(LEAF_VEIN_PATH, {
-      ...opts,
-      color: undefined,
-      borderColor: CREAM,
-      borderWidth: 0.5,
+/** Rectángulo dibujado sólo como contorno, en coordenadas de página. */
+function strokeRect(
+  page: PDFPage,
+  inset: number,
+  color: RGB,
+  thickness: number,
+  opacity = 1
+) {
+  page.drawRectangle({
+    x: inset,
+    y: inset,
+    width: PAGE_W - inset * 2,
+    height: PAGE_H - inset * 2,
+    borderColor: color,
+    borderWidth: thickness,
+    borderOpacity: opacity,
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Marco guilloché
+// ---------------------------------------------------------------------------
+
+/**
+ * Una corrida de ondas entrelazadas a lo largo de un lado de la banda.
+ * Tres senoidales desfasadas 120° producen el trenzado clásico del guilloché
+ * de un billete o un título oficial.
+ */
+function guillocheRun(
+  page: PDFPage,
+  start: Pt,
+  dir: Pt,
+  length: number,
+  amplitude: number,
+  cycles: number
+) {
+  const normal = { x: -dir.y, y: dir.x };
+  const steps = Math.max(80, Math.round(length / 2));
+  const phases = [0, (2 * Math.PI) / 3, (4 * Math.PI) / 3];
+
+  for (const phase of phases) {
+    const pts: Pt[] = [];
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const off = amplitude * Math.sin(2 * Math.PI * cycles * t + phase);
+      pts.push({
+        x: start.x + dir.x * length * t + normal.x * off,
+        y: start.y + dir.y * length * t + normal.y * off,
+      });
+    }
+    drawPolyline(page, pts, GREEN_GUILLOCHE, 0.55, 0.85);
+  }
+}
+
+/** Banda verde perimetral con guilloché y filetes dorados. */
+function drawOrnateBorder(page: PDFPage) {
+  // Banda verde: un rectángulo lleno con el interior "recortado" encima.
+  page.drawRectangle({
+    x: BAND_OUT,
+    y: BAND_OUT,
+    width: PAGE_W - BAND_OUT * 2,
+    height: PAGE_H - BAND_OUT * 2,
+    color: GREEN_BAND,
+  });
+  page.drawRectangle({
+    x: BAND_IN,
+    y: BAND_IN,
+    width: PAGE_W - BAND_IN * 2,
+    height: PAGE_H - BAND_IN * 2,
+    color: CREAM,
+  });
+
+  // Guilloché sobre cada lado, a lo largo de la línea media de la banda.
+  const amp = 8.5;
+  const hLen = PAGE_W - BAND_MID * 2;
+  const vLen = PAGE_H - BAND_MID * 2;
+  const density = 1 / 26; // ciclos por punto: mantiene el trenzado uniforme
+
+  guillocheRun(page, { x: BAND_MID, y: BAND_MID }, { x: 1, y: 0 }, hLen, amp, hLen * density);
+  guillocheRun(page, { x: BAND_MID, y: PAGE_H - BAND_MID }, { x: 1, y: 0 }, hLen, amp, hLen * density);
+  guillocheRun(page, { x: BAND_MID, y: BAND_MID }, { x: 0, y: 1 }, vLen, amp, vLen * density);
+  guillocheRun(page, { x: PAGE_W - BAND_MID, y: BAND_MID }, { x: 0, y: 1 }, vLen, amp, vLen * density);
+
+  // Filetes dorados: exterior, los dos bordes de la banda y el interior.
+  strokeRect(page, RULE_OUT, GOLD, 1.4);
+  strokeRect(page, BAND_OUT, GOLD_LIGHT, 1);
+  strokeRect(page, BAND_IN, GOLD_LIGHT, 1);
+  strokeRect(page, RULE_IN, GOLD, 0.9);
+}
+
+// ---------------------------------------------------------------------------
+// Laurel y moños
+// ---------------------------------------------------------------------------
+const LEAF_PATH = "M0,0 C5,4.4 14,4 21,0 C14,-4 5,-4.4 0,0 Z";
+
+/**
+ * Guirnalda de laurel: un tallo con leve caída y hojas alternadas a ambos
+ * lados, escalando de mayor a menor hacia la punta.
+ */
+function drawGarland(
+  page: PDFPage,
+  origin: Pt,
+  dir: Pt,
+  length: number,
+  sag: number
+) {
+  const normal = { x: -dir.y, y: dir.x };
+  const at = (t: number): Pt => ({
+    x: origin.x + dir.x * length * t + normal.x * sag * Math.sin(Math.PI * t),
+    y: origin.y + dir.y * length * t + normal.y * sag * Math.sin(Math.PI * t),
+  });
+
+  // Tallo
+  const stem: Pt[] = [];
+  for (let i = 0; i <= 24; i++) stem.push(at(i / 24));
+  drawPolyline(page, stem, GOLD, 1.2, 0.95);
+
+  // Hojas alternadas
+  const baseAngle = (Math.atan2(dir.y, dir.x) * 180) / Math.PI;
+  const count = 9;
+  for (let i = 0; i < count; i++) {
+    const t = 0.08 + (i / (count - 1)) * 0.86;
+    const p = at(t);
+    const side = i % 2 === 0 ? 1 : -1;
+    // Las hojas grandes al arranque, pequeñas hacia la punta.
+    const scale = 0.95 - t * 0.45;
+    page.drawSvgPath(LEAF_PATH, {
+      x: p.x,
+      y: p.y,
+      scale,
+      rotate: degrees(baseAngle + side * 38),
+      color: i % 2 === 0 ? GOLD : GOLD_LIGHT,
+      opacity: 0.95,
+      borderColor: GOLD_DARK,
+      borderWidth: 0.35,
       borderOpacity: 0.55,
-      opacity: undefined,
     });
   }
 }
 
-/**
- * Marco del certificado: no un rectángulo plano, sino dos elementos que
- * juntos leen como "documento oficial":
- *   1. Dos filetes (uno grueso en verde, uno fino en bronce) a modo de mat
- *      de cuadro.
- *   2. Una banda de marcas grabadas entre ambos filetes — como el canto
- *      estriado de una moneda — que rompe la monotonía de una línea recta.
- */
-function drawFrame(page: PDFPage, margin: number) {
-  const outer = margin;
-  const inner = margin + 16;
-
-  // Filete exterior (grueso, verde) y el interior (fino, bronce).
-  page.drawRectangle({
-    x: outer,
-    y: outer,
-    width: PAGE_W - outer * 2,
-    height: PAGE_H - outer * 2,
-    borderColor: GREEN_LINE,
-    borderWidth: 1.3,
-  });
-  page.drawRectangle({
-    x: inner,
-    y: inner,
-    width: PAGE_W - inner * 2,
-    height: PAGE_H - inner * 2,
-    borderColor: BRONZE,
-    borderWidth: 0.7,
-  });
-
-  // Banda de marcas grabadas entre los dos filetes (canto de moneda).
-  // `band` es el ancho del hueco entre el filete exterior y el interior;
-  // cada marca ocupa la mayor parte del hueco, dejando un margen simétrico.
-  const step = 9;
-  const band = inner - outer;
-  const tickLen = band - 6;
-  const tickInset = (band - tickLen) / 2;
-  for (let x = inner + step; x < PAGE_W - inner; x += step) {
-    page.drawLine({
-      start: { x, y: outer + tickInset },
-      end: { x, y: outer + tickInset + tickLen },
-      thickness: 0.5,
-      color: BRONZE,
-      opacity: 0.5,
+/** Moño de cinta: dos lazos, nudo y dos colas. */
+function drawBow(page: PDFPage, center: Pt, scale: number, rotation: number) {
+  const loop = (dir: 1 | -1) => {
+    page.drawEllipse({
+      x: center.x + dir * 8.5 * scale,
+      y: center.y + 2.5 * scale,
+      xScale: 8.5 * scale,
+      yScale: 4.6 * scale,
+      rotate: degrees(rotation + dir * 28),
+      color: GOLD_LIGHT,
+      borderColor: GOLD_DARK,
+      borderWidth: 0.4,
+      borderOpacity: 0.6,
     });
-    page.drawLine({
-      start: { x, y: PAGE_H - outer - tickInset },
-      end: { x, y: PAGE_H - outer - tickInset - tickLen },
-      thickness: 0.5,
-      color: BRONZE,
-      opacity: 0.5,
+  };
+  loop(1);
+  loop(-1);
+
+  // Colas
+  // Longitud acotada para que las colas no rebasen el ancho de la banda verde.
+  const tail = "M0,0 L3.6,0 L5.8,11 L1.3,8.2 Z";
+  for (const dir of [1, -1] as const) {
+    page.drawSvgPath(tail, {
+      x: center.x + dir * 2 * scale,
+      y: center.y,
+      scale,
+      rotate: degrees(rotation + dir * 18),
+      color: GOLD,
+      borderColor: GOLD_DARK,
+      borderWidth: 0.35,
+      borderOpacity: 0.55,
     });
   }
-  for (let y = outer + step; y < PAGE_H - outer; y += step) {
-    page.drawLine({
-      start: { x: outer + tickInset, y },
-      end: { x: outer + tickInset + tickLen, y },
-      thickness: 0.5,
-      color: BRONZE,
-      opacity: 0.5,
-    });
-    page.drawLine({
-      start: { x: PAGE_W - outer - tickInset, y },
-      end: { x: PAGE_W - outer - tickInset - tickLen, y },
-      thickness: 0.5,
-      color: BRONZE,
-      opacity: 0.5,
-    });
-  }
+
+  // Nudo
+  page.drawEllipse({
+    x: center.x,
+    y: center.y + 2 * scale,
+    xScale: 3.2 * scale,
+    yScale: 3.2 * scale,
+    color: GOLD,
+    borderColor: GOLD_DARK,
+    borderWidth: 0.4,
+  });
 }
 
-/**
- * Marca de agua tenue del wordmark detrás de todo el contenido — el mismo
- * recurso que usa el footer del sitio (una palabra enorme casi invisible).
- * Aporta la textura de "papel de seguridad" de un documento oficial sin
- * competir con el texto que va encima.
- */
+/** Ornamento completo de esquina: moño con dos guirnaldas saliendo de él. */
+function drawCornerOrnament(page: PDFPage, corner: Pt, hDir: 1 | -1, vDir: 1 | -1) {
+  drawGarland(page, corner, { x: hDir, y: 0 }, 150, -vDir * 5);
+  drawGarland(page, corner, { x: 0, y: vDir }, 118, hDir * 5);
+  drawBow(page, corner, 1.05, vDir === 1 ? 0 : 180);
+}
+
+// ---------------------------------------------------------------------------
+// Sellos
+// ---------------------------------------------------------------------------
+
+/** Contorno festoneado (borde de sello de cera / moneda) como path SVG. */
+function scallopPath(radius: number, scallops: number, depth: number): string {
+  const pts: string[] = [];
+  const steps = scallops * 14;
+  for (let i = 0; i <= steps; i++) {
+    const a = (i / steps) * Math.PI * 2;
+    const r = radius + depth * Math.cos(scallops * a);
+    const x = Math.cos(a) * r;
+    const y = Math.sin(a) * r;
+    pts.push(`${i === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`);
+  }
+  return `${pts.join(" ")} Z`;
+}
+
+/** Sello dorado con monograma. Se usa arriba (chico) y al centro (grande). */
+function drawGoldSeal(page: PDFPage, center: Pt, radius: number, serif: PDFFont) {
+  // Festón exterior, con una copia desplazada detrás que simula relieve.
+  const scallop = scallopPath(radius, 16, radius * 0.075);
+  page.drawSvgPath(scallop, {
+    x: center.x,
+    y: center.y + 1.2,
+    scale: 1,
+    color: GOLD_DARK,
+    opacity: 0.55,
+  });
+  page.drawSvgPath(scallop, {
+    x: center.x,
+    y: center.y,
+    scale: 1,
+    color: GOLD,
+    borderColor: GOLD_DARK,
+    borderWidth: 0.5,
+  });
+
+  // Anillos interiores
+  page.drawEllipse({
+    x: center.x,
+    y: center.y,
+    xScale: radius * 0.8,
+    yScale: radius * 0.8,
+    color: GOLD_LIGHT,
+    borderColor: GOLD_DARK,
+    borderWidth: 0.6,
+  });
+  page.drawEllipse({
+    x: center.x,
+    y: center.y,
+    xScale: radius * 0.66,
+    yScale: radius * 0.66,
+    color: GOLD_PALE,
+    borderColor: GOLD_DARK,
+    borderWidth: 0.5,
+    borderOpacity: 0.8,
+  });
+
+  const monogram = "GG";
+  const size = radius * 0.86;
+  const width = serif.widthOfTextAtSize(monogram, size);
+  page.drawText(monogram, {
+    x: center.x - width / 2,
+    y: center.y - size * 0.33,
+    size,
+    font: serif,
+    color: GOLD_DARK,
+  });
+}
+
+/** Roseta central: sello dorado sobre dos cintas verdes. */
+function drawRosette(page: PDFPage, center: Pt, radius: number, serif: PDFFont) {
+  const ribbon = "M-11,0 L11,0 L11,54 L0,40 L-11,54 Z";
+  for (const dir of [1, -1] as const) {
+    page.drawSvgPath(ribbon, {
+      x: center.x + dir * 11,
+      y: center.y - 4,
+      scale: 1,
+      rotate: degrees(dir * 13),
+      color: GREEN_BAND,
+      borderColor: GREEN_DEEP,
+      borderWidth: 0.6,
+    });
+  }
+  drawGoldSeal(page, center, radius, serif);
+}
+
+// ---------------------------------------------------------------------------
+// Marca de agua
+// ---------------------------------------------------------------------------
 function drawWatermark(page: PDFPage, serifItalic: PDFFont) {
   const text = "Green Gib";
-  const targetWidth = 540;
+  const target = 520;
   const probe = serifItalic.widthOfTextAtSize(text, 100);
-  const size = (targetWidth / probe) * 100;
+  const size = (target / probe) * 100;
   const width = serifItalic.widthOfTextAtSize(text, size);
   page.drawText(text, {
     x: (PAGE_W - width) / 2,
-    y: PAGE_H / 2 - size * 0.32,
+    y: PAGE_H / 2 - size * 0.3,
     size,
     font: serifItalic,
-    color: GREEN_DEEP,
-    opacity: 0.025,
+    color: GOLD_DARK,
+    opacity: 0.05,
   });
 }
 
 /**
- * Medallón con cintas: el gesto clásico de "reconocimiento oficial",
- * ejecutado en la paleta de la marca (nunca dorado brillante ni relleno
- * sólido) para que no se lea como sello de plantilla.
+ * Firma manuscrita escaneada, si existe.
+ *
+ * NO se dibuja una firma inventada: falsificar la rúbrica de una persona real
+ * en un documento que certifica algo no es aceptable. Para que aparezca,
+ * dirección debe colocar un PNG con fondo transparente en
+ * lib/certificates/assets/firma.png (ver docs/PLATAFORMA-CURSOS.md).
  */
-function drawSeal(page: PDFPage, cx: number, cy: number, serif: PDFFont) {
-  // Cintas, dibujadas primero para que el medallón quede encima.
-  const ribbon = (dir: 1 | -1) => {
-    const ribbonPath = "M-9,0 L9,0 L9,46 L0,34 L-9,46 Z";
-    page.drawSvgPath(ribbonPath, {
-      x: cx + dir * 9,
-      y: cy - 8,
-      scale: 1,
-      rotate: degrees(dir * 11),
-      color: SAND,
-      opacity: 0.85,
-      borderColor: BRONZE,
-      borderWidth: 0.5,
-      borderOpacity: 0.4,
-    });
-  };
-  ribbon(1);
-  ribbon(-1);
-
-  // Anillo exterior con marcas (canto de moneda) + anillo interior fino.
-  const rOuter = 30;
-  const ticks = 28;
-  for (let i = 0; i < ticks; i++) {
-    const a = (i / ticks) * Math.PI * 2;
-    const x1 = cx + Math.cos(a) * (rOuter - 3);
-    const y1 = cy + Math.sin(a) * (rOuter - 3);
-    const x2 = cx + Math.cos(a) * rOuter;
-    const y2 = cy + Math.sin(a) * rOuter;
-    page.drawLine({ start: { x: x1, y: y1 }, end: { x: x2, y: y2 }, thickness: 0.6, color: BRONZE, opacity: 0.65 });
+async function drawSignatureImage(
+  doc: PDFDocument,
+  page: PDFPage,
+  center: Pt,
+  maxWidth: number
+): Promise<void> {
+  const file = path.join(ASSETS_DIR, "firma.png");
+  if (!fs.existsSync(file)) return;
+  try {
+    const png = await doc.embedPng(fs.readFileSync(file));
+    const scale = Math.min(maxWidth / png.width, 44 / png.height);
+    const w = png.width * scale;
+    const h = png.height * scale;
+    page.drawImage(png, { x: center.x - w / 2, y: center.y, width: w, height: h });
+  } catch {
+    // Un PNG corrupto no debe tumbar la generación del certificado.
   }
-  page.drawEllipse({ x: cx, y: cy, xScale: rOuter - 5, yScale: rOuter - 5, color: CREAM, borderColor: GREEN_LINE, borderWidth: 1 });
-  page.drawEllipse({ x: cx, y: cy, xScale: rOuter - 10, yScale: rOuter - 10, borderColor: BRONZE, borderWidth: 0.6 });
-
-  const monogram = "GG";
-  const monoSize = 24;
-  const monoWidth = serif.widthOfTextAtSize(monogram, monoSize);
-  page.drawText(monogram, {
-    x: cx - monoWidth / 2,
-    y: cy - monoSize * 0.32,
-    size: monoSize,
-    font: serif,
-    color: GREEN_DEEP,
-  });
 }
+
+// ---------------------------------------------------------------------------
 
 export interface CertificateData {
   recipientName: string;
@@ -314,110 +513,127 @@ export async function generateCertificatePdf(data: CertificateData): Promise<Uin
 
   const page = doc.addPage([PAGE_W, PAGE_H]);
 
-  // ---- Fondo
+  // Fondo y marca de agua
   page.drawRectangle({ x: 0, y: 0, width: PAGE_W, height: PAGE_H, color: CREAM });
-
-  // ---- Marca de agua (antes que cualquier otro elemento, para quedar debajo)
   drawWatermark(page, serifItalic);
 
-  // ---- Marco grabado + escuadras
-  const M = 30;
-  drawFrame(page, M);
+  // Marco guilloché
+  drawOrnateBorder(page);
 
-  // Ramas decorativas en las esquinas inferiores, dentro del marco.
-  drawLeafSprig(page, M + 30, M + 30, 1, false);
-  drawLeafSprig(page, PAGE_W - M - 30, M + 30, 1, true);
+  // Ornamentos de esquina (sobre la banda, cubren el empalme del guilloché)
+  drawCornerOrnament(page, { x: BAND_MID, y: BAND_MID }, 1, 1);
+  drawCornerOrnament(page, { x: PAGE_W - BAND_MID, y: BAND_MID }, -1, 1);
+  drawCornerOrnament(page, { x: BAND_MID, y: PAGE_H - BAND_MID }, 1, -1);
+  drawCornerOrnament(page, { x: PAGE_W - BAND_MID, y: PAGE_H - BAND_MID }, -1, -1);
 
-  // ---- Encabezado de marca (con tracking: se lee grabado, no plano)
-  drawTracked(page, "GREEN GIB", PAGE_H - 68, sansBold, 16, GREEN_DEEP, 3.2);
-  drawTracked(page, "CERTIFICACIÓN PROFESIONAL", PAGE_H - 85, sansSemi, 8, OLIVE, 2.2);
+  // Sello superior, montado sobre el marco
+  drawGoldSeal(page, { x: PAGE_W / 2, y: PAGE_H - BAND_MID }, 25, serif);
 
-  // Filete corto bajo el encabezado
-  const ruleW = 46;
+  // ---- Encabezado
+  drawTracked(page, "GREEN GIB", PAGE_H - 118, sansBold, 17, GREEN_DEEP, 3.4);
+  drawTracked(page, "CERTIFICACIÓN PROFESIONAL", PAGE_H - 135, sansSemi, 8, GOLD_DARK, 2.4);
+
+  const ruleW = 54;
   page.drawLine({
-    start: { x: PAGE_W / 2 - ruleW / 2, y: PAGE_H - 96 },
-    end: { x: PAGE_W / 2 + ruleW / 2, y: PAGE_H - 96 },
-    thickness: 1.5,
-    color: BRONZE,
+    start: { x: PAGE_W / 2 - ruleW / 2, y: PAGE_H - 147 },
+    end: { x: PAGE_W / 2 + ruleW / 2, y: PAGE_H - 147 },
+    thickness: 1.4,
+    color: GOLD,
   });
 
   // ---- Título
-  drawCentered(page, "Certificado de Finalización", PAGE_H - 138, serif, 34, GREEN_DEEP);
+  drawCentered(page, "Certificado de Finalización", PAGE_H - 189, serif, 34, GREEN_DEEP);
 
-  // ---- "Se otorga a"
-  drawCentered(page, "Se otorga el presente reconocimiento a", PAGE_H - 168, sans, 10.5, INK_SOFT);
+  // ---- Destinatario
+  drawCentered(page, "Se otorga el presente reconocimiento a", PAGE_H - 217, sans, 10.5, INK_SOFT);
 
-  // ---- Nombre del alumno (elemento central, la pieza más grande)
-  const nameSize = data.recipientName.length > 28 ? 30 : 38;
-  drawCentered(page, data.recipientName, PAGE_H - 208, serifItalic, nameSize, GREEN_DEEP);
-  // Línea bajo el nombre, como "campo" a llenar en un certificado clásico.
-  const nameLineW = 380;
+  const nameSize = data.recipientName.length > 30 ? 29 : 36;
+  drawCentered(page, data.recipientName, PAGE_H - 256, serifItalic, nameSize, GREEN_DEEP);
+  const nameLineW = 420;
   page.drawLine({
-    start: { x: PAGE_W / 2 - nameLineW / 2, y: PAGE_H - 218 },
-    end: { x: PAGE_W / 2 + nameLineW / 2, y: PAGE_H - 218 },
-    thickness: 0.8,
-    color: BRONZE,
+    start: { x: PAGE_W / 2 - nameLineW / 2, y: PAGE_H - 267 },
+    end: { x: PAGE_W / 2 + nameLineW / 2, y: PAGE_H - 267 },
+    thickness: 0.9,
+    color: GOLD,
+    opacity: 0.85,
   });
 
-  // ---- Cuerpo: curso completado
+  // ---- Curso
   drawCentered(
     page,
     "por concluir satisfactoriamente el curso de capacitación técnica",
-    PAGE_H - 244,
+    PAGE_H - 291,
     sans,
     10.5,
     INK_SOFT
   );
-  drawCentered(page, `«${data.courseTitle}»`, PAGE_H - 266, sansBold, 15, INK);
+  drawCentered(page, `«${data.courseTitle}»`, PAGE_H - 313, sansBold, 15, INK);
   drawCentered(
     page,
     `Nivel ${data.courseLevel} · ${data.durationLabel} de contenido en video`,
-    PAGE_H - 284,
+    PAGE_H - 331,
     sans,
     9,
     INK_FAINT
   );
 
-  // ---- Medallón: ancla visualmente el centro del certificado.
-  drawSeal(page, PAGE_W / 2, 206, serif);
+  // ---- Roseta central
+  drawRosette(page, { x: PAGE_W / 2, y: 218 }, 31, serif);
 
-  // ---- Pie: fecha | firma | folio (tres columnas)
-  const footY = 92;
-  const colW = (PAGE_W - M * 2 - 60) / 3;
-  const col1X = M + 30;
+  // ---- Pie: fecha | firma | folio
+  const footY = 100;
+  const usable = PAGE_W - RULE_IN * 2 - 40;
+  const colW = usable / 3;
+  const col1X = RULE_IN + 20;
   const col2X = col1X + colW;
   const col3X = col2X + colW;
+  const lineW = colW - 26;
 
-  // Columna 1: fecha
-  page.drawLine({ start: { x: col1X, y: footY + 28 }, end: { x: col1X + colW - 24, y: footY + 28 }, thickness: 0.7, color: INK_FAINT });
+  // Firma escaneada, si dirección ya la subió.
+  await drawSignatureImage(doc, page, { x: col2X + lineW / 2, y: footY + 40 }, lineW * 0.8);
+
+  const rule = (x: number) =>
+    page.drawLine({
+      start: { x, y: footY + 30 },
+      end: { x: x + lineW, y: footY + 30 },
+      thickness: 0.8,
+      color: GOLD_DARK,
+      opacity: 0.55,
+    });
+
+  rule(col1X);
   page.drawText(formatDateEs(data.issuedAt), {
-    x: col1X, y: footY + 34, size: 10, font: sansSemi, color: INK,
+    x: col1X, y: footY + 36, size: 10, font: sansSemi, color: INK,
   });
-  drawTrackedLeft(page, "FECHA DE EMISIÓN", col1X, footY + 16, sansBold, 6.5, INK_FAINT, 1.2);
+  drawTrackedLeft(page, "FECHA DE EMISIÓN", col1X, footY + 17, sansBold, 6.5, INK_FAINT, 1.3);
 
-  // Columna 2: firma (centrada en su columna)
+  rule(col2X);
   const sigWidth = serifItalic.widthOfTextAtSize(data.signerName, 15);
-  const sigX = col2X + (colW - 24 - sigWidth) / 2;
-  page.drawText(data.signerName, { x: sigX, y: footY + 34, size: 15, font: serifItalic, color: GREEN_DEEP });
-  page.drawLine({ start: { x: col2X, y: footY + 28 }, end: { x: col2X + colW - 24, y: footY + 28 }, thickness: 0.7, color: INK_FAINT });
-  drawTrackedInColumn(page, data.signerRole.toUpperCase(), col2X, colW - 24, footY + 16, sansBold, 6.5, INK_FAINT, 1.2);
+  page.drawText(data.signerName, {
+    x: col2X + (lineW - sigWidth) / 2, y: footY + 36, size: 15, font: serifItalic, color: GREEN_DEEP,
+  });
+  drawTracked(page, data.signerRole.toUpperCase(), footY + 17, sansBold, 6.5, INK_FAINT, 1.3, {
+    x: col2X,
+    width: lineW,
+  });
 
-  // Columna 3: folio de verificación
-  page.drawLine({ start: { x: col3X, y: footY + 28 }, end: { x: col3X + colW - 24, y: footY + 28 }, thickness: 0.7, color: INK_FAINT });
-  page.drawText(data.code, { x: col3X, y: footY + 34, size: 10, font: sansSemi, color: INK });
-  drawTrackedLeft(page, "FOLIO DE VERIFICACIÓN", col3X, footY + 16, sansBold, 6.5, INK_FAINT, 1.2);
+  rule(col3X);
+  page.drawText(data.code, {
+    x: col3X, y: footY + 36, size: 10, font: sansSemi, color: INK,
+  });
+  drawTrackedLeft(page, "FOLIO DE VERIFICACIÓN", col3X, footY + 17, sansBold, 6.5, INK_FAINT, 1.3);
 
   // ---- Nota de verificación
   drawCentered(
     page,
     `Verifica la autenticidad de este documento en greengib.mx/certificados/verificar con el folio ${data.code}`,
-    50,
+    78,
     sans,
     8,
     INK_FAINT
   );
 
-  // ---- Metadatos del archivo
+  // ---- Metadatos
   doc.setTitle(`Certificado — ${data.recipientName} — ${data.courseTitle}`);
   doc.setAuthor("Green Gib");
   doc.setSubject(`Certificado de finalización del curso ${data.courseTitle}`);
@@ -425,45 +641,4 @@ export async function generateCertificatePdf(data: CertificateData): Promise<Uin
   doc.setCreator("Green Gib · Plataforma de cursos");
 
   return doc.save();
-}
-
-/** Como drawTracked, pero alineado a la izquierda desde x en vez de centrado. */
-function drawTrackedLeft(
-  page: PDFPage,
-  text: string,
-  x: number,
-  y: number,
-  font: PDFFont,
-  size: number,
-  color: ReturnType<typeof rgb>,
-  tracking: number
-) {
-  let cursor = x;
-  for (const c of text) {
-    page.drawText(c, { x: cursor, y, size, font, color });
-    cursor += font.widthOfTextAtSize(c, size) + tracking;
-  }
-}
-
-/** Como drawTracked, pero centrado dentro de una columna de ancho `colWidth`
- * que empieza en `colX`, en vez de centrado en toda la página. */
-function drawTrackedInColumn(
-  page: PDFPage,
-  text: string,
-  colX: number,
-  colWidth: number,
-  y: number,
-  font: PDFFont,
-  size: number,
-  color: ReturnType<typeof rgb>,
-  tracking: number
-) {
-  const chars = [...text];
-  const widths = chars.map((c) => font.widthOfTextAtSize(c, size));
-  const total = widths.reduce((s, w) => s + w, 0) + tracking * (chars.length - 1);
-  let x = colX + (colWidth - total) / 2;
-  chars.forEach((c, i) => {
-    page.drawText(c, { x, y, size, font, color });
-    x += widths[i] + tracking;
-  });
 }
