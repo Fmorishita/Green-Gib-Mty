@@ -16,6 +16,7 @@ export const mainNav = [
   { label: "Inicio", href: "/" },
   { label: "Servicios", href: "/servicios" },
   { label: "Portafolio", href: "/portafolio" },
+  { label: "Cursos", href: "/cursos" },
   { label: "Tienda", href: "/tienda" },
   { label: "Nosotros", href: "/nosotros" },
   { label: "Blog", href: "/blog" },
@@ -32,6 +33,7 @@ export const footerNav = {
   ],
   explorar: [
     { label: "Portafolio", href: "/portafolio" },
+    { label: "Cursos", href: "/cursos" },
     { label: "Tienda", href: "/tienda" },
     { label: "Nosotros", href: "/nosotros" },
     { label: "Blog", href: "/blog" },
